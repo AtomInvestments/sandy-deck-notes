@@ -354,12 +354,147 @@
   }
   .f.feature::after { background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(125, 211, 192, 0.16), transparent 45%); }
 
+  /* PLAYER BAR — sticky bottom, glass-blur */
+  .player {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    z-index: 50;
+    padding: 12px clamp(20px, 2vw, 32px);
+    background: rgba(8, 9, 13, 0.78);
+    backdrop-filter: blur(20px) saturate(160%);
+    -webkit-backdrop-filter: blur(20px) saturate(160%);
+    border-top: 1px solid var(--rule-mid);
+    display: grid;
+    grid-template-columns: auto 1.2fr 2.4fr auto;
+    gap: clamp(12px, 1.2vw, 22px);
+    align-items: center;
+    box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.4);
+  }
+  .player::before {
+    content: "";
+    position: absolute; top: -1px; left: 50%;
+    transform: translateX(-50%);
+    width: 80px; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--glow), transparent);
+    box-shadow: 0 0 10px var(--glow);
+  }
+  .player .play {
+    width: 42px; height: 42px;
+    border: 1px solid var(--glow-line);
+    background: var(--glow-soft);
+    color: var(--glow);
+    display: grid; place-items: center;
+    cursor: pointer;
+    transition: all 240ms var(--ease);
+    padding: 0;
+  }
+  .player .play:hover { background: var(--glow-mid); border-color: var(--glow); box-shadow: 0 0 16px rgba(125, 211, 192, 0.4); }
+  .player .play svg { width: 16px; height: 16px; fill: currentColor; }
+  .player .play .pause-i { display: none; }
+  .player.playing .play .play-i { display: none; }
+  .player.playing .play .pause-i { display: block; }
+  .player.playing .play { animation: pulse-play 2.4s ease-in-out infinite; }
+  @keyframes pulse-play {
+    0%, 100% { box-shadow: 0 0 0 rgba(125, 211, 192, 0.4); }
+    50% { box-shadow: 0 0 18px rgba(125, 211, 192, 0.55); }
+  }
+  .player .meta {
+    min-width: 0;
+    display: flex; flex-direction: column; gap: 2px;
+  }
+  .player .meta .title {
+    font-family: 'Manrope', sans-serif; font-weight: 700;
+    font-size: clamp(12px, 0.3vw + 11px, 14px);
+    color: var(--ink); letter-spacing: -0.006em;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .player .meta .sub {
+    font-family: 'JetBrains Mono', monospace; font-size: clamp(9px, 0.2vw + 8px, 10.5px);
+    letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-2);
+    font-weight: 600;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .player .meta .sub em { font-family: 'Instrument Serif', serif; font-style: italic; color: var(--glow); font-size: 1.2em; letter-spacing: 0; text-transform: none; font-weight: 400; }
+  .player .scrub {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 12px; align-items: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: clamp(10px, 0.2vw + 9px, 12px);
+    color: var(--ink-2); font-weight: 600;
+    letter-spacing: 0.06em;
+    min-width: 0;
+  }
+  .player .scrub .time { font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .player .scrub .time.cur { color: var(--glow); }
+  .player .bar-wrap {
+    position: relative;
+    height: 22px;
+    cursor: pointer;
+    display: flex; align-items: center;
+  }
+  .player .bar {
+    width: 100%; height: 3px;
+    background: var(--rule-mid);
+    position: relative;
+    border-radius: 100px;
+  }
+  .player .buffered {
+    position: absolute; top: 0; left: 0;
+    height: 100%; width: 0;
+    background: rgba(125, 211, 192, 0.18);
+    border-radius: 100px;
+    transition: width 280ms ease;
+  }
+  .player .fill {
+    position: absolute; top: 0; left: 0;
+    height: 100%; width: 0;
+    background: linear-gradient(90deg, var(--glow-deep), var(--glow), var(--glow-bright));
+    box-shadow: 0 0 10px var(--glow);
+    border-radius: 100px;
+  }
+  .player .thumb {
+    position: absolute; top: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    width: 12px; height: 12px;
+    background: var(--glow);
+    border-radius: 50%;
+    box-shadow: 0 0 12px var(--glow), 0 0 4px rgba(255, 255, 255, 0.8);
+    transition: transform 240ms var(--ease);
+  }
+  .player .bar-wrap:hover .thumb { transform: translate(-50%, -50%) scale(1); }
+  .player .controls { display: flex; align-items: center; gap: 8px; }
+  .player .ctl {
+    background: transparent;
+    border: 1px solid var(--rule-mid);
+    color: var(--ink-1);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: clamp(10px, 0.2vw + 9px, 12px);
+    letter-spacing: 0.06em;
+    padding: 7px 10px;
+    cursor: pointer;
+    transition: all 220ms var(--ease);
+    line-height: 1;
+    min-width: 38px;
+    font-weight: 700;
+  }
+  .player .ctl:hover { color: var(--glow); border-color: var(--glow); background: var(--glow-soft); }
+  .player .ctl svg { width: 14px; height: 14px; fill: currentColor; vertical-align: middle; }
+
+  /* Make room for the player so content doesn't slide under it */
+  .board { padding-bottom: 70px; }
+
   /* Mobile / short viewport — allow scroll, stack columns */
   @media (max-width: 880px), (max-height: 640px) {
     body { overflow: auto; }
-    .board { height: auto; min-height: 100vh; grid-template-rows: 38vh auto; }
+    .board { height: auto; min-height: 100vh; grid-template-rows: 38vh auto; padding-bottom: 110px; }
     .content { min-height: 0; }
     .grid { grid-template-columns: 1fr; }
+    .player { grid-template-columns: auto 1fr; grid-template-areas: "play meta" "scrub scrub" "controls controls"; gap: 8px; padding: 10px 16px; }
+    .player .play { grid-area: play; }
+    .player .meta { grid-area: meta; }
+    .player .scrub { grid-area: scrub; }
+    .player .controls { grid-area: controls; justify-content: flex-end; }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -463,7 +598,40 @@
 
 </main>
 
+<!-- Player -->
+<div class="player" id="player">
+  <button class="play" id="playBtn" aria-label="Play recording">
+    <svg class="play-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+    <svg class="pause-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5h4v14H6zm8 0h4v14h-4z"/></svg>
+  </button>
+  <div class="meta">
+    <div class="title">Diego @ Sandy Health</div>
+    <div class="sub">Jill's roundtable · <em>2h 18m</em> · voice-enhanced</div>
+  </div>
+  <div class="scrub">
+    <span class="time cur" id="timeCur">0:00</span>
+    <div class="bar-wrap" id="barWrap" role="slider" aria-label="Seek" tabindex="0">
+      <div class="bar">
+        <div class="buffered" id="buffered"></div>
+        <div class="fill" id="fill"></div>
+        <div class="thumb" id="thumb"></div>
+      </div>
+    </div>
+    <span class="time" id="timeTot">2:18:00</span>
+  </div>
+  <div class="controls">
+    <button class="ctl" id="speedBtn" aria-label="Playback speed">1×</button>
+    <button class="ctl" id="muteBtn" aria-label="Mute">
+      <svg id="volIcon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3a4.5 4.5 0 0 0-2.5-4v8a4.5 4.5 0 0 0 2.5-4z"/></svg>
+    </button>
+  </div>
+  <audio id="audio" preload="metadata">
+    <source src="diego-recording.webm" type="audio/webm; codecs=opus" />
+  </audio>
+</div>
+
 <script>
+  // Spotlight on Q + pushback rows
   document.querySelectorAll('.q, .f').forEach(el => {
     el.addEventListener('mousemove', (e) => {
       const r = el.getBoundingClientRect();
@@ -471,6 +639,84 @@
       el.style.setProperty('--my', `${e.clientY - r.top}px`);
     });
   });
+
+  // Player wiring
+  (function () {
+    const audio = document.getElementById('audio');
+    const player = document.getElementById('player');
+    const playBtn = document.getElementById('playBtn');
+    const fill = document.getElementById('fill');
+    const buffered = document.getElementById('buffered');
+    const thumb = document.getElementById('thumb');
+    const timeCur = document.getElementById('timeCur');
+    const timeTot = document.getElementById('timeTot');
+    const barWrap = document.getElementById('barWrap');
+    const speedBtn = document.getElementById('speedBtn');
+    const muteBtn = document.getElementById('muteBtn');
+    const volIcon = document.getElementById('volIcon');
+
+    const speeds = [1, 1.25, 1.5, 1.75, 2];
+    let speedIdx = 0;
+
+    function fmt(s) {
+      if (!isFinite(s)) return '0:00';
+      s = Math.max(0, Math.floor(s));
+      const h = Math.floor(s / 3600);
+      const m = Math.floor((s % 3600) / 60);
+      const sec = s % 60;
+      return h > 0 ? `${h}:${String(m).padStart(2,'0')}:${String(sec).padStart(2,'0')}` : `${m}:${String(sec).padStart(2,'0')}`;
+    }
+
+    audio.addEventListener('loadedmetadata', () => {
+      timeTot.textContent = fmt(audio.duration);
+    });
+    audio.addEventListener('timeupdate', () => {
+      const pct = (audio.currentTime / (audio.duration || 1)) * 100;
+      fill.style.width = pct + '%';
+      thumb.style.left = pct + '%';
+      timeCur.textContent = fmt(audio.currentTime);
+    });
+    audio.addEventListener('progress', () => {
+      if (audio.buffered.length > 0) {
+        const end = audio.buffered.end(audio.buffered.length - 1);
+        buffered.style.width = ((end / (audio.duration || 1)) * 100) + '%';
+      }
+    });
+    audio.addEventListener('play', () => player.classList.add('playing'));
+    audio.addEventListener('pause', () => player.classList.remove('playing'));
+    audio.addEventListener('ended', () => player.classList.remove('playing'));
+
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) audio.play(); else audio.pause();
+    });
+    barWrap.addEventListener('click', (e) => {
+      const r = barWrap.getBoundingClientRect();
+      const pct = Math.max(0, Math.min(1, (e.clientX - r.left) / r.width));
+      audio.currentTime = pct * (audio.duration || 0);
+    });
+    barWrap.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight') { audio.currentTime = Math.min(audio.duration, audio.currentTime + 15); e.preventDefault(); }
+      if (e.key === 'ArrowLeft')  { audio.currentTime = Math.max(0, audio.currentTime - 15); e.preventDefault(); }
+      if (e.key === ' ' || e.key === 'Enter') { playBtn.click(); e.preventDefault(); }
+    });
+    speedBtn.addEventListener('click', () => {
+      speedIdx = (speedIdx + 1) % speeds.length;
+      audio.playbackRate = speeds[speedIdx];
+      speedBtn.textContent = speeds[speedIdx] + '×';
+    });
+    muteBtn.addEventListener('click', () => {
+      audio.muted = !audio.muted;
+      volIcon.innerHTML = audio.muted
+        ? '<path d="M16.5 12L19 14.5 21.5 12 23 13.5 20.5 16 23 18.5 21.5 20 19 17.5 16.5 20 15 18.5 17.5 16 15 13.5 16.5 12zM3 9v6h4l5 5V4L7 9H3z"/>'
+        : '<path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3a4.5 4.5 0 0 0-2.5-4v8a4.5 4.5 0 0 0 2.5-4z"/>';
+    });
+
+    // Global keyboard shortcuts
+    document.addEventListener('keydown', (e) => {
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+      if (e.key === ' ' && e.target === document.body) { playBtn.click(); e.preventDefault(); }
+    });
+  })();
 </script>
 
 </body>
