@@ -10,336 +10,362 @@
 <style>
   :root {
     --bg-0: #08090d; --bg-1: #0c0e14; --bg-2: #12151d; --bg-3: #181c26;
-    --ink: #ecf0f5; --ink-1: #c8cdd7; --ink-2: #92998f; --ink-3: #686f7c; --ink-4: #404550;
+    --ink: #ecf0f5; --ink-1: #c8cdd7; --ink-2: #8a91a0; --ink-3: #5b6170;
     --glow: #7dd3c0; --glow-deep: #4ab19c; --glow-bright: #b1f0dc;
     --glow-soft: rgba(125, 211, 192, 0.10); --glow-mid: rgba(125, 211, 192, 0.24); --glow-line: rgba(125, 211, 192, 0.45);
     --warm: #d4a356; --warm-soft: rgba(212, 163, 86, 0.14);
     --hot: #ee5856; --hot-soft: rgba(238, 88, 86, 0.16); --hot-line: rgba(238, 88, 86, 0.4);
-    --rule: rgba(230, 233, 238, 0.07); --rule-mid: rgba(230, 233, 238, 0.14); --rule-strong: rgba(230, 233, 238, 0.26);
+    --rule: rgba(230, 233, 238, 0.07); --rule-mid: rgba(230, 233, 238, 0.14);
     --ease: cubic-bezier(0.22, 1, 0.36, 1);
     --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
   }
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
+  html, body { height: 100%; }
   body {
     background: var(--bg-0); color: var(--ink);
     font-family: 'Manrope', system-ui, sans-serif;
-    font-size: clamp(16px, 0.6vw + 14px, 19px);
-    line-height: 1.65; font-weight: 400;
-    -webkit-font-smoothing: antialiased; overflow-x: hidden; min-height: 100vh;
+    font-size: clamp(13px, 0.45vw + 11px, 16px);
+    line-height: 1.55; font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    overflow: hidden;
     text-rendering: optimizeLegibility;
   }
   ::selection { background: var(--glow); color: var(--bg-0); }
 
-  /* ATMOSPHERE */
+  /* Atmosphere */
   .atm { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
-  .atm-grid {
-    position: absolute; inset: 0;
-    background-image:
-      linear-gradient(rgba(230, 233, 238, 0.018) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(230, 233, 238, 0.018) 1px, transparent 1px);
-    background-size: 64px 64px;
-    mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, black 25%, transparent 90%);
-  }
   .atm-aurora { position: absolute; inset: -25%; filter: blur(90px); opacity: 0.55; }
   .atm-blob { position: absolute; border-radius: 50%; mix-blend-mode: screen; }
   .ab-1 { width: 55vw; height: 55vw; top: -12%; left: -8%; background: radial-gradient(circle, #2b7e6e 0%, transparent 65%); animation: drift-a 32s ease-in-out infinite alternate; }
   .ab-2 { width: 60vw; height: 60vw; bottom: -20%; right: -12%; background: radial-gradient(circle, #2c4d7a 0%, transparent 65%); opacity: 0.7; animation: drift-b 40s ease-in-out infinite alternate; }
   .ab-3 { width: 70vw; height: 70vw; top: 35%; left: 25%; background: radial-gradient(circle, #1f5a52 0%, transparent 70%); opacity: 0.55; animation: drift-c 36s ease-in-out infinite alternate; }
-  .ab-4 { width: 42vw; height: 42vw; top: 60%; left: -6%; background: radial-gradient(circle, #3a6a5d 0%, transparent 65%); opacity: 0.45; animation: drift-d 44s ease-in-out infinite alternate; }
   @keyframes drift-a { 0%{transform:translate(0,0) scale(1)} 50%{transform:translate(6vw,5vh) scale(1.08)} 100%{transform:translate(-4vw,10vh) scale(.95)} }
   @keyframes drift-b { 0%{transform:translate(0,0) scale(1)} 50%{transform:translate(-8vw,-6vh) scale(1.12)} 100%{transform:translate(4vw,-3vh) scale(.94)} }
   @keyframes drift-c { 0%{transform:translate(0,0) scale(1)} 50%{transform:translate(10vw,-7vh) scale(1.06)} 100%{transform:translate(-6vw,6vh) scale(1.10)} }
-  @keyframes drift-d { 0%{transform:translate(0,0) scale(1)} 50%{transform:translate(-5vw,8vh) scale(1.10)} 100%{transform:translate(8vw,-4vh) scale(0.92)} }
   .atm::after { content: ""; position: absolute; inset: 0; background: radial-gradient(ellipse 95% 75% at 50% 50%, transparent 30%, rgba(8, 9, 13, 0.55) 100%); }
   body::after {
     content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 1;
     background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence baseFrequency='0.85'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.022 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
     opacity: 0.5; mix-blend-mode: overlay;
   }
-  /* Scroll progress */
-  .scroll-progress {
-    position: fixed; top: 0; left: 0;
-    height: 2px; width: 0;
-    background: linear-gradient(90deg, var(--glow-deep), var(--glow), var(--glow-bright));
-    box-shadow: 0 0 14px var(--glow), 0 0 4px var(--glow-bright);
-    z-index: 100; transition: width 80ms linear; pointer-events: none;
+
+  /* BOARD — full viewport */
+  .board {
+    position: relative; z-index: 2;
+    height: 100vh;
+    display: grid;
+    grid-template-rows: 38vh 1fr;
   }
-  main { position: relative; z-index: 2; }
 
-  .spread {
-    max-width: 1280px; margin: 0 auto; padding: 0 56px;
-    display: grid; grid-template-columns: repeat(12, 1fr); column-gap: 24px;
+  /* HERO IMAGE BAND */
+  .hero {
+    position: relative; overflow: hidden;
+    border-bottom: 1px solid var(--rule-mid);
   }
-  @media (max-width: 920px) { .spread { padding: 0 32px; column-gap: 16px; } }
-  @media (max-width: 600px) { .spread { padding: 0 22px; grid-template-columns: repeat(6, 1fr); } }
-
-  .veil { opacity: 0; transform: translateY(14px); transition: opacity 800ms var(--ease-out-expo), transform 800ms var(--ease-out-expo); }
-  .veil.lit { opacity: 1; transform: translateY(0); }
-  .veil.d1 { transition-delay: 80ms; } .veil.d2 { transition-delay: 160ms; }
-
-  /* HERO */
-  .hero { padding: 80px 0 56px; }
-  .hero-folio {
-    grid-column: 1 / 13;
-    display: flex; align-items: center; gap: 18px;
-    padding-bottom: 14px; margin-bottom: 32px;
-    border-bottom: 1px solid var(--rule);
-    font-family: 'JetBrains Mono', monospace; font-size: clamp(11px, 0.2vw + 10px, 13px);
+  .hero-photo {
+    position: absolute; inset: 0;
+    background-image: url("hero.png");
+    background-size: cover;
+    background-position: center;
+    transform: scale(1.04);
+    animation: kenburns 28s ease-in-out infinite alternate;
+    filter: saturate(0.9) contrast(1.04);
+  }
+  @keyframes kenburns {
+    0%   { transform: scale(1.04) translate(0, 0); }
+    100% { transform: scale(1.12) translate(-1.5%, -1.2%); }
+  }
+  .hero-scrim {
+    position: absolute; inset: 0;
+    background:
+      linear-gradient(180deg, rgba(8, 9, 13, 0.30) 0%, rgba(8, 9, 13, 0.05) 30%, rgba(8, 9, 13, 0.55) 80%, rgba(8, 9, 13, 0.85) 100%),
+      linear-gradient(90deg, rgba(8, 9, 13, 0.5) 0%, rgba(8, 9, 13, 0.10) 35%, rgba(8, 9, 13, 0.20) 65%, rgba(8, 9, 13, 0.55) 100%),
+      radial-gradient(ellipse 60% 50% at 80% 20%, rgba(125, 211, 192, 0.10), transparent 70%);
+    pointer-events: none;
+  }
+  .hero-grain {
+    position: absolute; inset: 0;
+    background: repeating-linear-gradient(0deg, transparent 0, transparent 2px, rgba(255, 255, 255, 0.012) 2px, rgba(255, 255, 255, 0.012) 3px);
+    pointer-events: none;
+  }
+  .hero-content {
+    position: absolute; inset: 0; z-index: 2;
+    padding: clamp(18px, 2.4vh, 30px) clamp(28px, 3vw, 56px);
+    display: flex; flex-direction: column; justify-content: space-between;
+  }
+  .hero-top {
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    font-family: 'JetBrains Mono', monospace; font-size: clamp(10px, 0.25vw + 9px, 12px);
     letter-spacing: 0.22em; text-transform: uppercase; color: var(--ink-1); font-weight: 600;
   }
-  .hero-folio .ix { font-family: 'Instrument Serif', serif; font-style: italic; color: var(--glow); font-size: clamp(18px, 0.4vw + 16px, 22px); letter-spacing: 0; text-transform: none; }
-  .hero-folio .who-line {
-    margin-left: auto;
-    font-weight: 500; color: var(--ink-2);
-  }
-  .hero-folio .who-line em {
+  .hero-top .l { display: inline-flex; align-items: baseline; gap: 12px; }
+  .hero-top .ix {
     font-family: 'Instrument Serif', serif; font-style: italic;
-    color: var(--glow); font-size: 1.15em; letter-spacing: 0; text-transform: none; font-weight: 400;
+    color: var(--glow); font-size: clamp(18px, 0.4vw + 16px, 22px);
+    letter-spacing: 0; text-transform: none;
+    text-shadow: 0 0 16px rgba(125, 211, 192, 0.4);
   }
+  .hero-top .live {
+    display: inline-flex; align-items: center; gap: 8px;
+    color: var(--glow); padding: 6px 12px;
+    background: rgba(8, 9, 13, 0.55);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--rule-mid);
+  }
+  .hero-top .live::before {
+    content: ""; width: 6px; height: 6px;
+    background: var(--glow); box-shadow: 0 0 8px var(--glow);
+    animation: pulse 2.4s ease-in-out infinite;
+  }
+  @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(1.4); } }
 
-  .hero-title-wrap { grid-column: 1 / 13; }
-
-  h1.hero {
+  h1.hero-title {
     font-family: 'Manrope', sans-serif; font-weight: 700;
-    font-size: clamp(40px, 5.4vw, 80px);
-    line-height: 0.96; letter-spacing: -0.034em;
-    margin: 0 0 24px; max-width: 18ch;
+    font-size: clamp(40px, 6vw, 92px);
+    line-height: 0.95; letter-spacing: -0.034em;
+    color: var(--ink); margin: 0;
+    text-shadow: 0 4px 28px rgba(0, 0, 0, 0.55);
+    max-width: 14ch;
   }
-  h1.hero .it {
+  h1.hero-title .it {
     font-family: 'Instrument Serif', serif; font-style: italic;
     color: var(--glow); font-weight: 400; letter-spacing: -0.02em;
-    text-shadow: 0 0 28px rgba(125, 211, 192, 0.4);
+    text-shadow: 0 0 36px rgba(125, 211, 192, 0.55), 0 4px 28px rgba(0, 0, 0, 0.5);
   }
-  h1.hero .word {
-    display: inline-block; opacity: 0;
-    transform: translateY(28px);
+  h1.hero-title .word {
+    display: inline-block; opacity: 0; transform: translateY(28px);
     animation: word-in 1100ms var(--ease-out-expo) forwards;
   }
-  h1.hero .word:nth-child(1) { animation-delay: 200ms; }
-  h1.hero .word:nth-child(2) { animation-delay: 340ms; }
+  h1.hero-title .word:nth-child(1) { animation-delay: 250ms; }
+  h1.hero-title .word:nth-child(2) { animation-delay: 420ms; }
   @keyframes word-in { to { opacity: 1; transform: translateY(0); } }
 
-  .hero-sub {
-    opacity: 0; animation: word-in 900ms var(--ease-out-expo) 700ms forwards;
-    font-size: clamp(17px, 0.5vw + 15px, 20px);
-    line-height: 1.55; color: var(--ink-1);
-    max-width: 56ch;
-  }
-  .hero-sub em { font-family: 'Instrument Serif', serif; font-style: italic; color: var(--glow); font-weight: 400; font-size: 1.06em; }
-
-  /* SECTION */
-  section.bay { padding: 64px 0; scroll-margin-top: 16px; }
-  .sec-head {
-    grid-column: 1 / 13;
-    display: grid; grid-template-columns: subgrid;
-    align-items: end; column-gap: 24px;
-    margin-bottom: 32px; padding-bottom: 14px; border-bottom: 1px solid var(--rule);
-  }
-  .sec-num {
-    grid-column: 1 / 3;
-    font-family: 'JetBrains Mono', monospace; font-size: clamp(11px, 0.2vw + 10px, 13px);
-    letter-spacing: 0.22em; text-transform: uppercase; color: var(--glow); font-weight: 600;
-  }
-  .sec-num em { font-family: 'Instrument Serif', serif; font-style: italic; color: var(--glow); font-size: clamp(18px, 0.4vw + 16px, 21px); margin-right: 6px; letter-spacing: 0; text-transform: none; font-weight: 400; }
-  h2.sec {
-    grid-column: 1 / 13;
-    font-family: 'Manrope', sans-serif; font-weight: 700;
-    font-size: clamp(26px, 2.8vw, 38px);
-    line-height: 1.05; letter-spacing: -0.02em; margin: 0;
-  }
-  h2.sec .it { font-family: 'Instrument Serif', serif; font-style: italic; color: var(--glow); font-weight: 400; font-size: 1.08em; }
-  .sec-meta {
-    grid-column: 11 / 13; text-align: right;
-    font-family: 'JetBrains Mono', monospace; font-size: clamp(11px, 0.2vw + 10px, 13px);
-    letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-2); font-weight: 600;
-  }
-  @media (max-width: 720px) {
-    .sec-num, h2.sec, .sec-meta { grid-column: 1 / -1; text-align: left; }
-    .sec-meta { display: none; }
-  }
-
-  /* THE TAKE (executive read) — long-form prose card */
-  .take {
-    grid-column: 2 / 12;
+  /* CONTENT — below the hero */
+  .content {
     position: relative;
-    padding: 40px 56px;
+    padding: clamp(16px, 2vh, 26px) clamp(28px, 3vw, 56px);
+    display: grid;
+    grid-template-rows: auto 1fr;
+    gap: clamp(12px, 1.4vh, 20px);
+    min-height: 0;
+  }
+
+  /* MY TAKE strip */
+  .take {
+    padding: clamp(12px, 1.4vh, 18px) clamp(16px, 1.4vw, 24px);
     background: linear-gradient(135deg, rgba(125, 211, 192, 0.06), rgba(12, 14, 20, 0.55));
     backdrop-filter: blur(20px); border: 1px solid var(--rule-mid);
+    position: relative;
     animation: breathe 8s ease-in-out infinite alternate;
+    opacity: 0; transform: translateY(8px);
+    animation: rise 900ms var(--ease-out-expo) 700ms forwards, breathe 8s ease-in-out infinite alternate 1.6s;
   }
   .take::before {
     content: ""; position: absolute; top: -1px; left: 0;
-    width: 96px; height: 1px;
+    width: 80px; height: 1px;
     background: linear-gradient(90deg, var(--glow), transparent);
     box-shadow: 0 0 10px var(--glow);
   }
+  @keyframes rise { to { opacity: 1; transform: translateY(0); } }
   @keyframes breathe {
     0%   { box-shadow: 0 0 0 rgba(125, 211, 192, 0); }
-    100% { box-shadow: 0 0 50px rgba(125, 211, 192, 0.08), inset 0 0 30px rgba(125, 211, 192, 0.03); }
+    100% { box-shadow: 0 0 36px rgba(125, 211, 192, 0.08), inset 0 0 24px rgba(125, 211, 192, 0.025); }
+  }
+  .take .label {
+    font-family: 'JetBrains Mono', monospace; font-size: clamp(9.5px, 0.25vw + 8px, 11.5px);
+    letter-spacing: 0.24em; text-transform: uppercase; color: var(--glow);
+    font-weight: 600; margin-bottom: 6px;
   }
   .take p {
-    font-size: clamp(17px, 0.7vw + 14px, 21px);
-    line-height: 1.55; color: var(--ink-1);
-    margin: 0 0 18px;
+    font-size: clamp(13px, 0.55vw + 11px, 17px);
+    line-height: 1.4; color: var(--ink-1);
+    margin: 0 0 8px; font-weight: 500;
   }
   .take p:last-child { margin-bottom: 0; }
-  .take p .it { font-family: 'Instrument Serif', serif; font-style: italic; color: var(--glow); font-weight: 400; font-size: 1.05em; }
+  .take p:last-of-type { color: var(--ink); font-weight: 600; }
+  .take p .it { font-family: 'Instrument Serif', serif; font-style: italic; color: var(--glow); font-weight: 400; font-size: 1.04em; }
   .take p strong { color: var(--ink); font-weight: 700; }
-  .take p .em { border-bottom: 2px solid var(--glow); padding-bottom: 2px; }
-  @media (max-width: 880px) { .take { grid-column: 1 / 13; padding: 28px 24px; } }
-  @media (max-width: 600px) { .take { grid-column: 1 / -1; } }
+  .take p .em { border-bottom: 1.5px solid var(--glow); padding-bottom: 1px; }
 
-  /* QUESTIONS list */
-  .q-list { grid-column: 1 / 13; list-style: none; }
-  .q-row {
-    display: grid; grid-template-columns: 50px 1fr 110px;
-    gap: 20px; padding: 18px 0;
-    border-bottom: 1px solid var(--rule);
-    align-items: start;
-    transition: padding-left 320ms var(--ease);
-    position: relative; overflow: hidden;
+  /* GRID below take — 3 columns */
+  .grid {
+    display: grid;
+    grid-template-columns: 1.05fr 1.2fr 0.95fr;
+    gap: clamp(16px, 1.5vw, 28px);
+    min-height: 0; overflow: hidden;
   }
-  .q-row:last-child { border-bottom: none; }
-  .q-row::after {
+  .col {
+    display: flex; flex-direction: column;
+    min-height: 0; overflow: hidden;
+    opacity: 0; transform: translateY(8px);
+    animation: rise 900ms var(--ease-out-expo) forwards;
+  }
+  .col.c1 { animation-delay: 900ms; }
+  .col.c2 { animation-delay: 1040ms; }
+  .col.c3 { animation-delay: 1180ms; }
+
+  .col-head {
+    padding-bottom: clamp(6px, 0.7vh, 10px); margin-bottom: clamp(6px, 0.7vh, 10px);
+    border-bottom: 1px solid var(--rule);
+  }
+  .col-head h2 {
+    font-family: 'Manrope', sans-serif; font-weight: 700;
+    font-size: clamp(15px, 0.7vw + 11px, 21px);
+    color: var(--ink); letter-spacing: -0.014em; line-height: 1;
+  }
+  .col-head h2 .it { font-family: 'Instrument Serif', serif; font-style: italic; color: var(--glow); font-weight: 400; font-size: 1.12em; }
+  .col-body { flex: 1; min-height: 0; overflow: hidden; display: flex; flex-direction: column; gap: clamp(2px, 0.3vh, 6px); }
+
+  /* QUESTIONS rows */
+  .q {
+    display: grid; grid-template-columns: clamp(20px, 1.6vw, 28px) 1fr auto;
+    gap: clamp(6px, 0.6vw, 10px);
+    padding: clamp(4px, 0.7vh, 8px) 0;
+    border-bottom: 1px solid var(--rule);
+    align-items: baseline;
+    position: relative; overflow: hidden;
+    transition: padding-left 320ms var(--ease);
+  }
+  .q:last-child { border-bottom: none; }
+  .q::after {
     content: ""; position: absolute; inset: 0;
     background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(125, 211, 192, 0.10), transparent 36%);
     opacity: 0; transition: opacity 280ms var(--ease);
-    pointer-events: none; z-index: 0;
-  }
-  .q-row:hover { padding-left: 8px; }
-  .q-row:hover::after { opacity: 1; }
-  .q-row > * { position: relative; z-index: 1; }
-  .q-row .num {
-    font-family: 'Instrument Serif', serif; font-style: italic;
-    color: var(--glow); font-size: clamp(32px, 0.7vw + 28px, 42px); line-height: 0.9;
-    text-align: right; text-shadow: 0 0 18px rgba(125, 211, 192, 0.3);
-    transition: transform 380ms var(--ease), text-shadow 380ms var(--ease);
-  }
-  .q-row:hover .num { transform: scale(1.12); text-shadow: 0 0 26px rgba(125, 211, 192, 0.6); }
-  .q-row .body { font-size: clamp(15px, 0.4vw + 14px, 18px); line-height: 1.5; color: var(--ink-1); }
-  .q-row .body strong { color: var(--ink); font-weight: 700; }
-  .q-row .body em { font-family: 'Instrument Serif', serif; font-style: italic; color: var(--glow); font-weight: 400; }
-  .q-row .status {
-    font-family: 'JetBrains Mono', monospace; font-size: clamp(9.5px, 0.2vw + 8.5px, 11px);
-    letter-spacing: 0.18em; text-transform: uppercase; font-weight: 700;
-    padding: 5px 10px; text-align: center;
-    align-self: start;
-  }
-  .q-row .status.answered { background: var(--glow-soft); color: var(--glow); border: 1px solid var(--glow-line); }
-  .q-row .status.partial { background: var(--warm-soft); color: var(--warm); border: 1px solid rgba(212, 163, 86, 0.4); }
-  .q-row .status.open { background: var(--hot-soft); color: var(--hot); border: 1px solid var(--hot-line); }
-  @media (max-width: 720px) {
-    .q-row { grid-template-columns: 36px 1fr; gap: 12px; }
-    .q-row .status { grid-column: 2 / 3; justify-self: start; margin-top: 8px; }
-  }
-
-  /* PUSHBACK cards */
-  .feed-grid {
-    grid-column: 1 / 13;
-    display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px;
-    background: var(--rule);
-  }
-  @media (max-width: 720px) { .feed-grid { grid-template-columns: 1fr; } }
-  .feed {
-    background: var(--bg-1); padding: 22px 24px;
-    display: grid; grid-template-columns: 36px 1fr; gap: 14px;
-    transition: background 240ms var(--ease);
-    position: relative; overflow: hidden;
-  }
-  /* The orphaned 5th card becomes a centered featured row */
-  .feed.feature {
-    grid-column: 1 / -1;
-    padding: 28px 24px;
-    background:
-      linear-gradient(135deg, rgba(125, 211, 192, 0.05), rgba(12, 14, 20, 0.4)),
-      var(--bg-1);
-    border-top: 1px solid var(--glow-line);
-    grid-template-columns: 1fr min(560px, 100%) 1fr;
-  }
-  .feed.feature .n { grid-column: 1; justify-self: end; padding-right: 14px; font-size: clamp(30px, 0.7vw + 26px, 36px); }
-  .feed.feature > div:last-child { grid-column: 2; }
-  .feed.feature::before { background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(125, 211, 192, 0.16), transparent 50%); }
-  @media (max-width: 720px) { .feed.feature { grid-template-columns: 36px 1fr; padding: 22px 24px; } .feed.feature .n { grid-column: auto; justify-self: auto; padding-right: 0; } .feed.feature > div:last-child { grid-column: auto; } }
-  .feed::before {
-    content: ""; position: absolute; inset: 0;
-    background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(125, 211, 192, 0.12), transparent 50%);
-    opacity: 0; transition: opacity 280ms ease;
     pointer-events: none;
   }
-  .feed:hover { background: var(--bg-2); }
-  .feed:hover::before { opacity: 1; }
-  .feed > * { position: relative; z-index: 1; }
-  .feed .n {
+  .q:hover { padding-left: 4px; }
+  .q:hover::after { opacity: 1; }
+  .q > * { position: relative; z-index: 1; }
+  .q .n {
     font-family: 'Instrument Serif', serif; font-style: italic;
-    color: var(--glow); font-size: clamp(26px, 0.5vw + 24px, 30px); line-height: 0.9; text-align: right;
-    transition: transform 380ms var(--ease), text-shadow 380ms var(--ease);
+    color: var(--glow); font-size: clamp(14px, 0.5vw + 12px, 19px);
+    text-align: right; line-height: 1.1;
   }
-  .feed:hover .n { transform: scale(1.12); text-shadow: 0 0 20px rgba(125, 211, 192, 0.55); }
-  .feed .who {
-    font-family: 'JetBrains Mono', monospace; font-size: clamp(10px, 0.2vw + 9px, 11.5px);
-    letter-spacing: 0.18em; text-transform: uppercase; color: var(--glow); font-weight: 700;
-    margin-bottom: 6px;
+  .q .t {
+    font-size: clamp(11.5px, 0.4vw + 10px, 14px);
+    color: var(--ink-1); line-height: 1.3;
   }
-  .feed .t {
-    font-size: clamp(14.5px, 0.3vw + 13.5px, 16.5px); line-height: 1.55; color: var(--ink-1);
+  .q .t strong { color: var(--ink); font-weight: 700; }
+  .q .pill {
+    font-family: 'JetBrains Mono', monospace; font-size: clamp(8px, 0.18vw + 7px, 9.5px);
+    letter-spacing: 0.14em; text-transform: uppercase; font-weight: 700;
+    padding: 2px 6px; line-height: 1; align-self: center;
+    border: 1px solid transparent; white-space: nowrap;
   }
-  .feed .t em { font-family: 'Instrument Serif', serif; font-style: italic; color: var(--glow); font-weight: 400; }
-  .feed .t strong { color: var(--ink); font-weight: 700; }
+  .pill.ok { color: var(--glow); background: var(--glow-soft); border-color: var(--glow-line); }
+  .pill.part { color: var(--warm); background: var(--warm-soft); border-color: rgba(212, 163, 86, 0.4); }
+  .pill.open { color: var(--hot); background: var(--hot-soft); border-color: var(--hot-line); }
 
-  /* OWED — actions table */
-  .actions-wrap { grid-column: 1 / 13; overflow-x: auto; }
-  .actions-table {
-    width: 100%; border-collapse: separate; border-spacing: 0;
-    border: 1px solid var(--rule-mid);
-  }
-  .actions-table thead th {
-    background: rgba(125, 211, 192, 0.04);
-    text-align: left; padding: 14px 18px;
-    font-family: 'JetBrains Mono', monospace; font-size: clamp(10.5px, 0.2vw + 9.5px, 12px);
-    letter-spacing: 0.22em; text-transform: uppercase; color: var(--glow); font-weight: 700;
-    border-bottom: 1px solid var(--rule-mid);
-  }
-  .actions-table td {
-    padding: 16px 18px; border-bottom: 1px solid var(--rule);
-    vertical-align: top;
-    font-size: clamp(14px, 0.3vw + 13px, 16px); line-height: 1.5;
-  }
-  .actions-table tbody tr:last-child td { border-bottom: none; }
-  .actions-table tbody tr { transition: background 200ms var(--ease); }
-  .actions-table tbody tr:hover { background: rgba(125, 211, 192, 0.04); }
-  .actions-table .act { color: var(--ink); font-weight: 500; }
-  .actions-table .act em { font-family: 'Instrument Serif', serif; font-style: italic; color: var(--glow); font-weight: 400; }
-  .actions-table .own { color: var(--ink-1); font-weight: 600; white-space: nowrap; }
-  .actions-table .due {
-    font-family: 'JetBrains Mono', monospace; font-size: clamp(12.5px, 0.2vw + 11.5px, 14px);
-    color: var(--glow); font-weight: 600; white-space: nowrap;
-  }
-
-  /* WHO PICKED UP WHAT */
-  .commits-list { grid-column: 1 / 13; list-style: none; }
-  .commit-row {
-    display: grid; grid-template-columns: 140px 1fr;
-    gap: 24px; padding: 18px 0;
+  /* PUSHBACK rows */
+  .f {
+    display: grid; grid-template-columns: clamp(24px, 1.8vw, 30px) 1fr;
+    gap: clamp(8px, 0.6vw, 12px);
+    padding: clamp(5px, 0.7vh, 8px) 0;
     border-bottom: 1px solid var(--rule);
-    align-items: start;
+    position: relative; overflow: hidden;
+    transition: padding-left 320ms var(--ease);
   }
-  .commit-row:last-child { border-bottom: none; }
-  .commit-row .who {
-    font-family: 'JetBrains Mono', monospace; font-size: clamp(11px, 0.2vw + 10px, 13px);
+  .f:last-child { border-bottom: none; }
+  .f::after {
+    content: ""; position: absolute; inset: 0;
+    background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(125, 211, 192, 0.12), transparent 40%);
+    opacity: 0; transition: opacity 280ms var(--ease);
+    pointer-events: none;
+  }
+  .f:hover { padding-left: 4px; }
+  .f:hover::after { opacity: 1; }
+  .f > * { position: relative; z-index: 1; }
+  .f .n {
+    font-family: 'Instrument Serif', serif; font-style: italic;
+    color: var(--glow); font-size: clamp(15px, 0.5vw + 12px, 20px);
+    text-align: right; line-height: 1;
+  }
+  .f .who {
+    font-family: 'JetBrains Mono', monospace; font-size: clamp(8.5px, 0.18vw + 7.5px, 10.5px);
     letter-spacing: 0.18em; text-transform: uppercase; color: var(--glow); font-weight: 700;
-    padding-top: 2px;
+    margin-bottom: 2px; display: block;
   }
-  .commit-row .commit { font-size: clamp(14.5px, 0.3vw + 13.5px, 16.5px); line-height: 1.55; color: var(--ink-1); }
-  .commit-row .commit em { font-family: 'Instrument Serif', serif; font-style: italic; color: var(--glow); font-weight: 400; }
-  .commit-row .commit strong { color: var(--ink); font-weight: 700; }
-  @media (max-width: 720px) { .commit-row { grid-template-columns: 1fr; gap: 8px; } }
+  .f .body {
+    font-size: clamp(11.5px, 0.4vw + 10px, 14px);
+    line-height: 1.3; color: var(--ink-1);
+  }
+  .f .body strong { color: var(--ink); font-weight: 700; }
+  .f .body em { font-family: 'Instrument Serif', serif; font-style: italic; color: var(--glow); font-weight: 400; }
+
+  /* NEXT col — actions + commits */
+  .actions { display: flex; flex-direction: column; gap: 0; }
+  .a {
+    display: grid; grid-template-columns: clamp(18px, 1.4vw, 24px) 1fr auto;
+    gap: clamp(6px, 0.5vw, 10px);
+    padding: clamp(4px, 0.6vh, 7px) 0;
+    border-bottom: 1px solid var(--rule);
+    align-items: baseline;
+  }
+  .a:last-child { border-bottom: none; }
+  .a .n {
+    font-family: 'JetBrains Mono', monospace; color: var(--ink-3);
+    font-size: clamp(9px, 0.18vw + 8px, 10.5px); font-weight: 700;
+    letter-spacing: 0.08em; text-align: right;
+  }
+  .a .t {
+    font-size: clamp(11px, 0.4vw + 9.5px, 13.5px);
+    color: var(--ink-1); line-height: 1.3;
+  }
+  .a .t .own {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--glow); font-weight: 600;
+    font-size: 0.9em; letter-spacing: 0.08em; margin-right: 4px;
+  }
+  .a .t em { font-family: 'Instrument Serif', serif; font-style: italic; color: var(--glow); font-weight: 400; }
+  .a .due {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: clamp(8.5px, 0.18vw + 7.5px, 10px);
+    color: var(--glow); font-weight: 600;
+    letter-spacing: 0.1em; white-space: nowrap;
+  }
+  .commits {
+    border-top: 1px dashed var(--rule); padding-top: clamp(8px, 1vh, 12px); margin-top: clamp(8px, 1vh, 12px);
+  }
+  .commits-head {
+    font-family: 'JetBrains Mono', monospace; font-size: clamp(9px, 0.2vw + 8px, 10.5px);
+    letter-spacing: 0.22em; text-transform: uppercase; color: var(--glow);
+    font-weight: 700; margin-bottom: clamp(4px, 0.6vh, 8px);
+  }
+  .c {
+    padding: clamp(3px, 0.4vh, 6px) 0;
+    border-bottom: 1px solid var(--rule);
+    font-size: clamp(11px, 0.4vw + 9.5px, 13.5px);
+    line-height: 1.3; color: var(--ink-1);
+  }
+  .c:last-child { border-bottom: none; }
+  .c .who {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--glow); font-weight: 700;
+    font-size: 0.9em; letter-spacing: 0.1em; margin-right: 4px;
+  }
+  .c strong { color: var(--ink); font-weight: 700; }
+  .c em { font-family: 'Instrument Serif', serif; font-style: italic; color: var(--glow); font-weight: 400; }
+
+  /* Featured 5th pushback */
+  .f.feature {
+    background: linear-gradient(135deg, rgba(125, 211, 192, 0.05), transparent);
+    border-top: 1px solid var(--glow-line);
+    margin-top: 2px;
+  }
+  .f.feature::after { background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(125, 211, 192, 0.16), transparent 45%); }
+
+  /* Mobile / short viewport — allow scroll, stack columns */
+  @media (max-width: 880px), (max-height: 640px) {
+    body { overflow: auto; }
+    .board { height: auto; min-height: 100vh; grid-template-rows: 38vh auto; }
+    .content { min-height: 0; }
+    .grid { grid-template-columns: 1fr; }
+  }
 
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
-    .veil { opacity: 1; transform: none; }
-    .atm-blob, .take { animation: none; }
-    h1.hero .word, .hero-sub { opacity: 1; transform: none; }
+    .col, .take, h1.hero-title .word { opacity: 1; transform: none; }
+    .atm-blob, .hero-photo { animation: none; }
   }
 </style>
 </head>
@@ -350,202 +376,101 @@
     <div class="atm-blob ab-1"></div>
     <div class="atm-blob ab-2"></div>
     <div class="atm-blob ab-3"></div>
-    <div class="atm-blob ab-4"></div>
   </div>
 </div>
 
-<div class="scroll-progress" id="scrollprogress" aria-hidden="true"></div>
+<main class="board">
 
-<main>
-
-  <section class="hero spread">
-    <div class="hero-folio">
-      <span class="ix">I.</span>
-      <span>Roundtable notes</span>
-    </div>
-    <div class="hero-title-wrap">
-      <h1 class="hero">
+  <section class="hero">
+    <div class="hero-photo" aria-hidden="true"></div>
+    <div class="hero-scrim" aria-hidden="true"></div>
+    <div class="hero-grain" aria-hidden="true"></div>
+    <div class="hero-content">
+      <div class="hero-top">
+        <div class="l">
+          <span class="ix">I.</span>
+          <span>Roundtable notes</span>
+        </div>
+        <span class="live">Live read</span>
+      </div>
+      <h1 class="hero-title">
         <span class="word">Roundtable</span>
         <span class="word it">feedback.</span>
       </h1>
     </div>
   </section>
 
-  <section class="bay spread" id="take">
-    <div class="veil take">
-      <p>Sandy's pitch is in the right shape. The story tracks, the IP is real, and the case study sells itself. The packaging is two notches off — and all three problems are fixable by Monday.</p>
-      <p><strong>One —</strong> the CFO vocabulary isn't there. <span class="it">DSO, net collection rate, gross collection rate, reimbursement timeframe.</span> Until those four words sit on every slide, the room hears a pitch — not a P&amp;L delta.</p>
-      <p><strong>Two —</strong> the entry door is wrong. David said it three different ways: don't walk into the C-suite at a large Epic hospital cold. Walk into the physicians' org first and let it pull you upstream.</p>
-      <p><strong>Three —</strong> the analytics dashboard that anchors the whole pitch hasn't shipped. Until it does, every "we can forecast revenue" line is a promise instead of a proof slide. Ship it next week and the deck flips.</p>
-      <p>Fix all three and <span class="em">the same room votes yes.</span></p>
-    </div>
-  </section>
+  <section class="content">
 
-  <section class="bay spread" id="asked">
-    <div class="sec-head">
-      <h2 class="sec">Five real <span class="it">questions.</span></h2>
+    <div class="take">
+      <div class="label">My take</div>
+      <p>Sandy's pitch is in the right shape. The story tracks, the IP is real, the case study sells itself. The packaging is two notches off.</p>
+      <p><strong>One —</strong> the CFO vocabulary isn't there (<span class="it">DSO, NCR, GCR, reimbursement</span>). <strong>Two —</strong> wrong door at Epic shops; enter the IPA, not the C-suite. <strong>Three —</strong> the dashboard that anchors the pitch hasn't shipped.</p>
+      <p>Fix all three by Monday and <span class="em">the same room votes yes.</span></p>
     </div>
-    <ul class="q-list veil">
-      <li class="q-row">
-        <div class="num">i.</div>
-        <div class="body"><strong>David —</strong> How does Sandy actually get into large Epic shops without walking into the C-suite first?</div>
-        <div class="status answered">Answered</div>
-      </li>
-      <li class="q-row">
-        <div class="num">ii.</div>
-        <div class="body"><strong>David —</strong> Where's the CFO vocabulary in your pitch? <em>(DSO, NCR, GCR, reimbursement.)</em></div>
-        <div class="status open">Still open</div>
-      </li>
-      <li class="q-row">
-        <div class="num">iii.</div>
-        <div class="body"><strong>Bruce / Chris —</strong> You're sitting on data nobody else has. Why isn't it a product yet?</div>
-        <div class="status partial">Half</div>
-      </li>
-      <li class="q-row">
-        <div class="num">iv.</div>
-        <div class="body"><strong>John —</strong> How does PHI get protected before anything hits the LLM?</div>
-        <div class="status answered">Answered</div>
-      </li>
-      <li class="q-row">
-        <div class="num">v.</div>
-        <div class="body"><strong>Chris —</strong> Are you going to build a patient-facing RAG for aftercare?</div>
-        <div class="status answered">Answered</div>
-      </li>
-    </ul>
-  </section>
 
-  <section class="bay spread" id="said">
-    <div class="sec-head">
-      <h2 class="sec">Five pieces of <span class="it">pushback.</span></h2>
-    </div>
-    <div class="veil feed-grid">
-      <div class="feed">
-        <div class="n">i.</div>
-        <div>
-          <div class="who">David</div>
-          <div class="t">"You're selling a revenue product without the words a CFO uses." <em>DSO, NCR, GCR, reimbursement timeframe.</em> Pair CFO ROI with <strong>RVUs</strong> for the clinical side — never lead patient experience with administrators.</div>
-        </div>
-      </div>
-      <div class="feed">
-        <div class="n">ii.</div>
-        <div>
-          <div class="who">David</div>
-          <div class="t">"Don't walk into a big Epic hospital cold." Enter via the <em>physicians' organization</em> tied to it. Pilot with the tech-savvy liaisons. Grow from there. <strong>First Physicians Group + Sarasota Memorial</strong> is the pattern.</div>
-        </div>
-      </div>
-      <div class="feed">
-        <div class="n">iii.</div>
-        <div>
-          <div class="who">Bruce / Chris</div>
-          <div class="t">"You're sitting on data nobody else has. Productize it." Forecast 7–15-day revenue per practice. Flag cancellations to the CFO as lost-revenue events. Surface negotiated-rate gaps. <em>"Be the integrator."</em></div>
-        </div>
-      </div>
-      <div class="feed">
-        <div class="n">iv.</div>
-        <div>
-          <div class="who">Ryan</div>
-          <div class="t">Hospitals are nonprofits — <strong>cash flow beats topline.</strong> Build the analytics around DSO reduction and cash-flow predictability, not revenue charts.</div>
-        </div>
-      </div>
-      <div class="feed feature">
-        <div class="n">v.</div>
-        <div>
-          <div class="who">David</div>
-          <div class="t">Use <em>"distress interaction reduction"</em> when you're pitching CMOs and case managers. It's their language — borrowed from how retail talks about distress purchases.</div>
-        </div>
-      </div>
-    </div>
-  </section>
+    <div class="grid">
 
-  <section class="bay spread" id="owed">
-    <div class="sec-head">
-      <h2 class="sec">What got <span class="it">picked up.</span></h2>
-    </div>
-    <div class="actions-wrap veil">
-      <table class="actions-table">
-        <thead>
-          <tr><th>Action</th><th>Owner</th><th>By when</th></tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="act">Walk Diego through <em>DSO / NCR / GCR / reimbursement</em> + analytics talking points before the UMMC meeting</td>
-            <td class="own">David</td>
-            <td class="due">Next week</td>
-          </tr>
-          <tr>
-            <td class="act">Give David an honest inventory of what Sandy can actually do so he doesn't oversell during prep</td>
-            <td class="own">Diego</td>
-            <td class="due">Next week</td>
-          </tr>
-          <tr>
-            <td class="act">Ship the analytics / reporting dashboard</td>
-            <td class="own">Sandy Health</td>
-            <td class="due">Next week</td>
-          </tr>
-          <tr>
-            <td class="act">Ship the patient-education citations workflow</td>
-            <td class="own">Sandy Health</td>
-            <td class="due">Within two weeks</td>
-          </tr>
-          <tr>
-            <td class="act">Ship the claims submission workflow</td>
-            <td class="own">Sandy Health</td>
-            <td class="due">Before end of Q4</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
+      <section class="col c1">
+        <div class="col-head">
+          <h2>Five real <span class="it">questions.</span></h2>
+        </div>
+        <div class="col-body">
+          <div class="q"><span class="n">i.</span><span class="t"><strong>David —</strong> How does Sandy get into large Epic shops?</span><span class="pill ok">Answered</span></div>
+          <div class="q"><span class="n">ii.</span><span class="t"><strong>David —</strong> Where's the CFO vocabulary?</span><span class="pill open">Open</span></div>
+          <div class="q"><span class="n">iii.</span><span class="t"><strong>Bruce / Chris —</strong> Why isn't the data productized?</span><span class="pill part">Half</span></div>
+          <div class="q"><span class="n">iv.</span><span class="t"><strong>John —</strong> How is PHI protected pre-LLM?</span><span class="pill ok">Answered</span></div>
+          <div class="q"><span class="n">v.</span><span class="t"><strong>Chris —</strong> Patient-facing RAG for aftercare?</span><span class="pill ok">Answered</span></div>
+        </div>
+      </section>
 
-  <section class="bay spread" id="picked">
-    <div class="sec-head">
-      <h2 class="sec">Two people <span class="it">on the hook.</span></h2>
+      <section class="col c2">
+        <div class="col-head">
+          <h2>Five pieces of <span class="it">pushback.</span></h2>
+        </div>
+        <div class="col-body">
+          <div class="f"><span class="n">i.</span><div><span class="who">David</span><span class="body">Missing the finance vocabulary CFOs respond to — <em>DSO, NCR, GCR, reimbursement.</em> Pair ROI with <strong>RVUs</strong> for clinicians.</span></div></div>
+          <div class="f"><span class="n">ii.</span><div><span class="who">David</span><span class="body">For large Epic shops, enter via the <em>physicians' org</em> (IPA). <strong>First Physicians Group + Sarasota Memorial</strong> is the proof pattern.</span></div></div>
+          <div class="f"><span class="n">iii.</span><div><span class="who">Bruce / Chris</span><span class="body">Sandy has data nobody else has — forecast 7-15-day revenue, flag cancellations to the CFO. <em>"Be the integrator."</em></span></div></div>
+          <div class="f"><span class="n">iv.</span><div><span class="who">Ryan</span><span class="body">Hospitals are nonprofits — <strong>cash flow beats topline.</strong> Build analytics around DSO + cash-flow predictability.</span></div></div>
+          <div class="f feature"><span class="n">v.</span><div><span class="who">David</span><span class="body">Use <em>"distress interaction reduction"</em> framing for the CMO / case-management audiences.</span></div></div>
+        </div>
+      </section>
+
+      <section class="col c3">
+        <div class="col-head">
+          <h2>What got <span class="it">picked up.</span></h2>
+        </div>
+        <div class="col-body">
+          <div class="actions">
+            <div class="a"><span class="n">01</span><span class="t"><span class="own">David</span>Prep Diego on <em>DSO / NCR / GCR</em> vocab + analytics.</span><span class="due">Next wk</span></div>
+            <div class="a"><span class="n">02</span><span class="t"><span class="own">Diego</span>Give David Sandy's real data inventory.</span><span class="due">Next wk</span></div>
+            <div class="a"><span class="n">03</span><span class="t"><span class="own">Sandy</span>Ship the analytics dashboard.</span><span class="due">Next wk</span></div>
+            <div class="a"><span class="n">04</span><span class="t"><span class="own">Sandy</span>Ship patient-education citations.</span><span class="due">2 wks</span></div>
+            <div class="a"><span class="n">05</span><span class="t"><span class="own">Sandy</span>Ship claims submission workflow.</span><span class="due">EOQ4</span></div>
+          </div>
+          <div class="commits">
+            <div class="commits-head">On the hook</div>
+            <div class="c"><span class="who">David</span>Preps Diego next week for the <strong>UMMC CTO meeting</strong>.</div>
+            <div class="c"><span class="who">Diego</span>Takes the prep; ships <strong>dashboard, citations, claims.</strong></div>
+          </div>
+        </div>
+      </section>
+
     </div>
-    <ul class="commits-list veil">
-      <li class="commit-row">
-        <div class="who">David</div>
-        <div class="commit">Preps Diego next week with the metrics vocabulary and analytics talking points for the <strong>UMMC CTO meeting</strong> the Monday after.</div>
-      </li>
-      <li class="commit-row">
-        <div class="who">Diego</div>
-        <div class="commit">Takes the prep, gives David the real data inventory, and ships three things: <strong>dashboard next week</strong>, <strong>citations within two</strong>, <strong>claims by end of Q4.</strong></div>
-      </li>
-    </ul>
+
   </section>
 
 </main>
 
 <script>
-  (function () {
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('lit'); io.unobserve(e.target); } });
-    }, { threshold: 0.08, rootMargin: '0px 0px -8% 0px' });
-    document.querySelectorAll('.veil:not(.lit)').forEach(el => io.observe(el));
-  })();
-  (function () {
-    const bar = document.getElementById('scrollprogress');
-    if (!bar) return;
-    let ticking = false;
-    function update() {
-      const doc = document.documentElement;
-      const scrollTop = window.scrollY || doc.scrollTop;
-      const max = (doc.scrollHeight - window.innerHeight);
-      const pct = max > 0 ? Math.min(100, (scrollTop / max) * 100) : 0;
-      bar.style.width = pct + '%';
-      ticking = false;
-    }
-    window.addEventListener('scroll', () => { if (!ticking) { window.requestAnimationFrame(update); ticking = true; } }, { passive: true });
-    update();
-  })();
-  (function () {
-    document.querySelectorAll('.q-row, .feed').forEach(el => {
-      el.addEventListener('mousemove', (e) => {
-        const r = el.getBoundingClientRect();
-        el.style.setProperty('--mx', `${e.clientX - r.left}px`);
-        el.style.setProperty('--my', `${e.clientY - r.top}px`);
-      });
+  document.querySelectorAll('.q, .f').forEach(el => {
+    el.addEventListener('mousemove', (e) => {
+      const r = el.getBoundingClientRect();
+      el.style.setProperty('--mx', `${e.clientX - r.left}px`);
+      el.style.setProperty('--my', `${e.clientY - r.top}px`);
     });
-  })();
+  });
 </script>
 
 </body>
