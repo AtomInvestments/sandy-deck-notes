@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Deck Feedback — Sandy Health</title>
+<title>Meeting Summary — Sandy Health roundtable</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -11,9 +11,9 @@
   :root {
     --bg-0: #08090d; --bg-1: #0c0e14; --bg-2: #12151d; --bg-3: #181c26;
     --ink: #ecf0f5; --ink-1: #c8cdd7; --ink-2: #92998f; --ink-3: #686f7c; --ink-4: #404550;
-    --glow: #7dd3c0; --glow-deep: #4ab19c; --glow-bright: #a2eedb;
-    --glow-soft: rgba(125, 211, 192, 0.10); --glow-mid: rgba(125, 211, 192, 0.24);
-    --hot: #ee5856; --hot-soft: rgba(238, 88, 86, 0.16); --hot-line: rgba(238, 88, 86, 0.4);
+    --glow: #7dd3c0; --glow-deep: #4ab19c; --glow-bright: #b1f0dc;
+    --glow-soft: rgba(125, 211, 192, 0.10); --glow-mid: rgba(125, 211, 192, 0.24); --glow-line: rgba(125, 211, 192, 0.45);
+    --warm: #d4a356; --warm-soft: rgba(212, 163, 86, 0.14);
     --rule: rgba(230, 233, 238, 0.07); --rule-mid: rgba(230, 233, 238, 0.14); --rule-strong: rgba(230, 233, 238, 0.26);
     --ease: cubic-bezier(0.22, 1, 0.36, 1);
     --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
@@ -30,7 +30,7 @@
   }
   ::selection { background: var(--glow); color: var(--bg-0); }
 
-  /* Atmosphere */
+  /* ATMOSPHERE */
   .atm { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
   .atm-grid {
     position: absolute; inset: 0;
@@ -45,27 +45,24 @@
   .ab-1 { width: 55vw; height: 55vw; top: -12%; left: -8%; background: radial-gradient(circle, #2b7e6e 0%, transparent 65%); animation: drift-a 32s ease-in-out infinite alternate; }
   .ab-2 { width: 60vw; height: 60vw; bottom: -20%; right: -12%; background: radial-gradient(circle, #2c4d7a 0%, transparent 65%); opacity: 0.7; animation: drift-b 40s ease-in-out infinite alternate; }
   .ab-3 { width: 70vw; height: 70vw; top: 35%; left: 25%; background: radial-gradient(circle, #1f5a52 0%, transparent 70%); opacity: 0.55; animation: drift-c 36s ease-in-out infinite alternate; }
-  .ab-4 { width: 42vw; height: 42vw; top: 60%; left: -6%; background: radial-gradient(circle, #6e2c3a 0%, transparent 65%); opacity: 0.45; animation: drift-d 44s ease-in-out infinite alternate; }
+  .ab-4 { width: 42vw; height: 42vw; top: 60%; left: -6%; background: radial-gradient(circle, #3a6a5d 0%, transparent 65%); opacity: 0.45; animation: drift-d 44s ease-in-out infinite alternate; }
   @keyframes drift-a { 0%{transform:translate(0,0) scale(1)} 50%{transform:translate(6vw,5vh) scale(1.08)} 100%{transform:translate(-4vw,10vh) scale(.95)} }
   @keyframes drift-b { 0%{transform:translate(0,0) scale(1)} 50%{transform:translate(-8vw,-6vh) scale(1.12)} 100%{transform:translate(4vw,-3vh) scale(.94)} }
   @keyframes drift-c { 0%{transform:translate(0,0) scale(1)} 50%{transform:translate(10vw,-7vh) scale(1.06)} 100%{transform:translate(-6vw,6vh) scale(1.10)} }
   @keyframes drift-d { 0%{transform:translate(0,0) scale(1)} 50%{transform:translate(-5vw,8vh) scale(1.10)} 100%{transform:translate(8vw,-4vh) scale(0.92)} }
   .atm::after { content: ""; position: absolute; inset: 0; background: radial-gradient(ellipse 95% 75% at 50% 50%, transparent 30%, rgba(8, 9, 13, 0.55) 100%); }
-
-  /* Scroll progress bar */
-  .scroll-progress {
-    position: fixed; top: 0; left: 0;
-    height: 2px; width: 0;
-    background: linear-gradient(90deg, #ee5856, #ff8a87, #ee5856);
-    box-shadow: 0 0 14px var(--hot), 0 0 4px #ff8a87;
-    z-index: 100;
-    transition: width 80ms linear;
-    pointer-events: none;
-  }
   body::after {
     content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 1;
     background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence baseFrequency='0.85'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.022 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
     opacity: 0.5; mix-blend-mode: overlay;
+  }
+  /* Scroll progress */
+  .scroll-progress {
+    position: fixed; top: 0; left: 0;
+    height: 2px; width: 0;
+    background: linear-gradient(90deg, var(--glow-deep), var(--glow), var(--glow-bright));
+    box-shadow: 0 0 14px var(--glow), 0 0 4px var(--glow-bright);
+    z-index: 100; transition: width 80ms linear; pointer-events: none;
   }
   main { position: relative; z-index: 2; }
 
@@ -78,8 +75,7 @@
 
   .veil { opacity: 0; transform: translateY(14px); transition: opacity 800ms var(--ease-out-expo), transform 800ms var(--ease-out-expo); }
   .veil.lit { opacity: 1; transform: translateY(0); }
-  .veil.d1 { transition-delay: 80ms; }
-  .veil.d2 { transition-delay: 160ms; }
+  .veil.d1 { transition-delay: 80ms; } .veil.d2 { transition-delay: 160ms; }
 
   /* HERO */
   .hero { padding: 80px 0 56px; }
@@ -89,38 +85,32 @@
     padding-bottom: 14px; margin-bottom: 32px;
     border-bottom: 1px solid var(--rule);
     font-family: 'JetBrains Mono', monospace; font-size: clamp(11px, 0.2vw + 10px, 13px);
-    letter-spacing: 0.22em; text-transform: uppercase; font-weight: 600;
-    color: var(--ink-1);
+    letter-spacing: 0.22em; text-transform: uppercase; color: var(--ink-1); font-weight: 600;
   }
-  .hero-folio .ix { font-family: 'Instrument Serif', serif; font-style: italic; color: var(--hot); font-size: clamp(18px, 0.4vw + 16px, 22px); letter-spacing: 0; text-transform: none; }
-  .hero-folio .live {
-    margin-left: auto; color: var(--hot);
+  .hero-folio .ix { font-family: 'Instrument Serif', serif; font-style: italic; color: var(--glow); font-size: clamp(18px, 0.4vw + 16px, 22px); letter-spacing: 0; text-transform: none; }
+  .hero-folio .badge {
+    margin-left: auto; color: var(--glow);
     display: inline-flex; align-items: center; gap: 8px;
   }
-  .hero-folio .live::before {
+  .hero-folio .badge::before {
     content: ""; width: 6px; height: 6px;
-    background: var(--hot); box-shadow: 0 0 8px var(--hot);
+    background: var(--glow); box-shadow: 0 0 8px var(--glow);
     animation: pulse 2.4s ease-in-out infinite;
   }
   @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(1.4); } }
 
-  .hero-title-wrap { grid-column: 1 / 8; }
-  .hero-meta-wrap { grid-column: 8 / 13; align-self: end; }
-  @media (max-width: 920px) {
-    .hero-title-wrap, .hero-meta-wrap { grid-column: 1 / 13; }
-    .hero-meta-wrap { margin-top: 32px; }
-  }
+  .hero-title-wrap { grid-column: 1 / 13; }
 
   h1.hero {
     font-family: 'Manrope', sans-serif; font-weight: 700;
-    font-size: clamp(44px, 5.6vw, 84px);
+    font-size: clamp(40px, 5.4vw, 80px);
     line-height: 0.96; letter-spacing: -0.034em;
-    margin: 0 0 24px; max-width: 14ch;
+    margin: 0 0 24px; max-width: 18ch;
   }
   h1.hero .it {
     font-family: 'Instrument Serif', serif; font-style: italic;
-    color: var(--hot); font-weight: 400; letter-spacing: -0.02em;
-    text-shadow: 0 0 28px rgba(238, 88, 86, 0.4);
+    color: var(--glow); font-weight: 400; letter-spacing: -0.02em;
+    text-shadow: 0 0 28px rgba(125, 211, 192, 0.4);
   }
   h1.hero .word {
     display: inline-block; opacity: 0;
@@ -132,63 +122,51 @@
   h1.hero .word:nth-child(3) { animation-delay: 480ms; }
   @keyframes word-in { to { opacity: 1; transform: translateY(0); } }
 
-  .hero-sub, .hero-disclaimer {
-    opacity: 0;
-    animation: word-in 900ms var(--ease-out-expo) forwards;
+  .hero-sub, .hero-meta-row {
+    opacity: 0; animation: word-in 900ms var(--ease-out-expo) forwards;
   }
   .hero-sub { animation-delay: 700ms; }
-  .hero-disclaimer { animation-delay: 900ms; }
+  .hero-meta-row { animation-delay: 900ms; }
+
   .hero-sub {
     font-size: clamp(17px, 0.5vw + 15px, 20px);
     line-height: 1.55; color: var(--ink-1);
-    max-width: 46ch; margin-bottom: 16px;
+    max-width: 60ch; margin-bottom: 24px;
   }
-  .hero-sub em { font-family: 'Instrument Serif', serif; font-style: italic; color: var(--hot); font-weight: 400; font-size: 1.06em; }
-  .hero-disclaimer {
-    font-size: clamp(14px, 0.4vw + 12px, 16px);
-    color: var(--ink-1);
-    padding: 12px 0; border-top: 1px solid var(--rule);
-    max-width: 54ch;
-    margin-top: 8px;
-    line-height: 1.55;
-  }
-  .hero-disclaimer em { font-style: italic; color: var(--hot); }
+  .hero-sub em { font-family: 'Instrument Serif', serif; font-style: italic; color: var(--glow); font-weight: 400; font-size: 1.06em; }
 
-  .hero-meta {
-    border-left: 1px solid var(--rule-mid);
-    padding-left: 24px;
+  .hero-meta-row {
+    display: flex; flex-wrap: wrap; gap: 12px 28px;
+    padding: 14px 0 0; border-top: 1px solid var(--rule);
+    font-family: 'JetBrains Mono', monospace; font-size: clamp(11px, 0.2vw + 10px, 13px);
+    letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-1); font-weight: 600;
   }
-  .hero-meta dl { display: grid; grid-template-columns: auto 1fr; gap: 8px 16px; }
-  .hero-meta dt {
-    font-family: 'JetBrains Mono', monospace; font-size: clamp(10px, 0.2vw + 9px, 12px);
-    letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-2);
-    font-weight: 600;
-  }
-  .hero-meta dd { font-size: clamp(14px, 0.3vw + 13px, 16px); color: var(--ink-1); font-weight: 500; }
-  .hero-meta dd strong { color: var(--ink); font-weight: 700; }
-  .hero-meta dd em { font-family: 'Instrument Serif', serif; font-style: italic; color: var(--hot); font-size: clamp(15px, 0.3vw + 14px, 17px); }
+  .hero-meta-row .item { display: inline-flex; align-items: baseline; gap: 8px; }
+  .hero-meta-row .item span:first-child { color: var(--ink-3); font-size: 0.85em; letter-spacing: 0.22em; }
+  .hero-meta-row strong { color: var(--ink); font-weight: 700; }
+  .hero-meta-row em { font-family: 'Instrument Serif', serif; font-style: italic; color: var(--glow); font-size: 1.2em; letter-spacing: 0; text-transform: none; font-weight: 400; }
 
   /* SECTION */
-  section.bay { padding: 72px 0; scroll-margin-top: 16px; }
+  section.bay { padding: 64px 0; scroll-margin-top: 16px; }
   .sec-head {
     grid-column: 1 / 13;
     display: grid; grid-template-columns: subgrid;
     align-items: end; column-gap: 24px;
-    margin-bottom: 36px; padding-bottom: 14px; border-bottom: 1px solid var(--rule);
+    margin-bottom: 32px; padding-bottom: 14px; border-bottom: 1px solid var(--rule);
   }
   .sec-num {
     grid-column: 1 / 3;
     font-family: 'JetBrains Mono', monospace; font-size: clamp(11px, 0.2vw + 10px, 13px);
-    letter-spacing: 0.22em; text-transform: uppercase; color: var(--hot); font-weight: 600;
+    letter-spacing: 0.22em; text-transform: uppercase; color: var(--glow); font-weight: 600;
   }
-  .sec-num em { font-family: 'Instrument Serif', serif; font-style: italic; color: var(--hot); font-size: clamp(18px, 0.4vw + 16px, 21px); margin-right: 6px; letter-spacing: 0; text-transform: none; font-weight: 400; }
+  .sec-num em { font-family: 'Instrument Serif', serif; font-style: italic; color: var(--glow); font-size: clamp(18px, 0.4vw + 16px, 21px); margin-right: 6px; letter-spacing: 0; text-transform: none; font-weight: 400; }
   h2.sec {
     grid-column: 3 / 10;
     font-family: 'Manrope', sans-serif; font-weight: 700;
     font-size: clamp(26px, 2.8vw, 38px);
     line-height: 1.05; letter-spacing: -0.02em; margin: 0;
   }
-  h2.sec .it { font-family: 'Instrument Serif', serif; font-style: italic; color: var(--hot); font-weight: 400; font-size: 1.08em; }
+  h2.sec .it { font-family: 'Instrument Serif', serif; font-style: italic; color: var(--glow); font-weight: 400; font-size: 1.08em; }
   .sec-meta {
     grid-column: 10 / 13; text-align: right;
     font-family: 'JetBrains Mono', monospace; font-size: clamp(11px, 0.2vw + 10px, 13px);
@@ -199,253 +177,196 @@
     .sec-meta { display: none; }
   }
 
-  /* VERDICT */
-  .verdict {
+  /* EXEC SUMMARY card */
+  .summary {
     grid-column: 2 / 12;
     position: relative;
-    padding: 44px 56px;
-    background: linear-gradient(135deg, rgba(238, 88, 86, 0.06), rgba(12, 14, 20, 0.55));
+    padding: 36px 48px;
+    background: linear-gradient(135deg, rgba(125, 211, 192, 0.06), rgba(12, 14, 20, 0.55));
     backdrop-filter: blur(20px); border: 1px solid var(--rule-mid);
+    animation: breathe 8s ease-in-out infinite alternate;
   }
-  .verdict::before {
+  .summary::before {
     content: ""; position: absolute; top: -1px; left: 0;
     width: 96px; height: 1px;
-    background: linear-gradient(90deg, var(--hot), transparent);
-    box-shadow: 0 0 10px var(--hot);
+    background: linear-gradient(90deg, var(--glow), transparent);
+    box-shadow: 0 0 10px var(--glow);
   }
-  .verdict p {
-    font-size: clamp(24px, 2.8vw, 36px);
-    line-height: 1.32; color: var(--ink);
-    margin: 0 0 16px; font-weight: 500; letter-spacing: -0.014em;
+  @keyframes breathe {
+    0%   { box-shadow: 0 0 0 rgba(125, 211, 192, 0); }
+    100% { box-shadow: 0 0 50px rgba(125, 211, 192, 0.08), inset 0 0 30px rgba(125, 211, 192, 0.03); }
   }
-  .verdict p:last-child { margin-bottom: 0; }
-  .verdict .it { font-family: 'Instrument Serif', serif; font-style: italic; color: var(--hot); font-weight: 400; font-size: 1.08em; }
-  .verdict .em { border-bottom: 2px solid var(--hot); padding-bottom: 2px; }
-  @media (max-width: 880px) { .verdict { grid-column: 1 / 13; padding: 28px 24px; } }
-  @media (max-width: 600px) { .verdict { grid-column: 1 / -1; } }
+  .summary p {
+    font-size: clamp(17px, 1vw + 14px, 22px);
+    line-height: 1.5; color: var(--ink-1);
+    margin: 0;
+  }
+  .summary p .it { font-family: 'Instrument Serif', serif; font-style: italic; color: var(--glow); font-weight: 400; }
+  .summary p strong { color: var(--ink); font-weight: 700; }
+  @media (max-width: 880px) { .summary { grid-column: 1 / 13; padding: 28px 24px; } }
+  @media (max-width: 600px) { .summary { grid-column: 1 / -1; } }
 
-  /* SLIDE-BY-SLIDE TABLE */
-  .slide-list { grid-column: 1 / 13; list-style: none; }
-  .slide-row {
-    display: grid; grid-template-columns: 60px 1fr 1.2fr;
-    gap: 24px; padding: 28px 0;
+  /* QUESTIONS list */
+  .q-list { grid-column: 1 / 13; list-style: none; }
+  .q-row {
+    display: grid; grid-template-columns: 50px 1fr 110px;
+    gap: 20px; padding: 18px 0;
     border-bottom: 1px solid var(--rule);
     align-items: start;
     transition: padding-left 320ms var(--ease);
-    position: relative;
-    overflow: hidden;
+    position: relative; overflow: hidden;
   }
-  .slide-row:last-child { border-bottom: none; }
-  .slide-row::before {
-    content: ""; position: absolute; left: 0; top: 0;
-    width: 0; height: 100%;
-    background: linear-gradient(90deg, var(--hot-soft), transparent 60%);
-    transition: width 380ms var(--ease); z-index: 0;
-  }
-  /* Mouse-follow spotlight (set via --mx, --my from JS) */
-  .slide-row::after {
+  .q-row:last-child { border-bottom: none; }
+  .q-row::after {
     content: ""; position: absolute; inset: 0;
-    background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(238, 88, 86, 0.10), transparent 36%);
+    background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(125, 211, 192, 0.10), transparent 36%);
     opacity: 0; transition: opacity 280ms var(--ease);
     pointer-events: none; z-index: 0;
   }
-  .slide-row:hover { padding-left: 8px; }
-  .slide-row:hover::before { width: 100%; }
-  .slide-row:hover::after { opacity: 1; }
-  .slide-row > * { position: relative; z-index: 1; }
-  .slide-row .num {
+  .q-row:hover { padding-left: 8px; }
+  .q-row:hover::after { opacity: 1; }
+  .q-row > * { position: relative; z-index: 1; }
+  .q-row .num {
     font-family: 'Instrument Serif', serif; font-style: italic;
-    color: var(--hot); font-size: clamp(42px, 0.8vw + 38px, 56px); line-height: 0.9;
-    text-align: right; text-shadow: 0 0 18px rgba(238, 88, 86, 0.3);
+    color: var(--glow); font-size: clamp(32px, 0.7vw + 28px, 42px); line-height: 0.9;
+    text-align: right; text-shadow: 0 0 18px rgba(125, 211, 192, 0.3);
     transition: transform 380ms var(--ease), text-shadow 380ms var(--ease);
   }
-  .slide-row:hover .num {
-    transform: scale(1.12) translateX(-2px);
-    text-shadow: 0 0 28px rgba(238, 88, 86, 0.6), 0 0 8px rgba(238, 88, 86, 0.4);
-  }
-  .slide-row .title strong {
-    display: block; font-family: 'Manrope', sans-serif;
-    font-weight: 700; font-size: clamp(17px, 0.4vw + 15px, 20px); color: var(--ink);
-    margin-bottom: 6px; line-height: 1.3; letter-spacing: -0.008em;
-  }
-  .slide-row .title .what {
-    font-size: clamp(14px, 0.3vw + 13px, 16px); line-height: 1.5; color: var(--ink-1);
-    margin-bottom: 10px;
-  }
-  .slide-row .title .tag {
-    display: inline-flex; align-items: center; gap: 6px;
-    font-family: 'JetBrains Mono', monospace; font-size: clamp(10px, 0.2vw + 9px, 12px);
+  .q-row:hover .num { transform: scale(1.12); text-shadow: 0 0 26px rgba(125, 211, 192, 0.6); }
+  .q-row .body { font-size: clamp(15px, 0.4vw + 14px, 18px); line-height: 1.5; color: var(--ink-1); }
+  .q-row .body strong { color: var(--ink); font-weight: 700; }
+  .q-row .body em { font-family: 'Instrument Serif', serif; font-style: italic; color: var(--glow); font-weight: 400; }
+  .q-row .status {
+    font-family: 'JetBrains Mono', monospace; font-size: clamp(9.5px, 0.2vw + 8.5px, 11px);
     letter-spacing: 0.18em; text-transform: uppercase; font-weight: 700;
-    padding: 5px 10px; background: var(--hot-soft);
-    color: var(--hot); border: 1px solid var(--hot-line);
+    padding: 5px 10px; text-align: center;
+    align-self: start;
   }
-  .slide-row .title .tag.keep { background: var(--glow-soft); color: var(--glow); border-color: rgba(125, 211, 192, 0.4); }
-  .slide-row .title .tag.cut { background: rgba(230, 233, 238, 0.06); color: var(--ink-1); border-color: var(--rule-mid); }
-  .slide-row .verdict-cell .label {
-    font-family: 'JetBrains Mono', monospace; font-size: clamp(10px, 0.2vw + 9px, 12px);
-    letter-spacing: 0.18em; text-transform: uppercase; color: var(--hot);
-    font-weight: 700; margin-bottom: 8px;
-  }
-  .slide-row .verdict-cell p {
-    font-size: clamp(15px, 0.4vw + 14px, 18px); line-height: 1.6; color: var(--ink-1);
-  }
-  .slide-row .verdict-cell p em { font-style: italic; color: var(--hot); }
-  .slide-row .verdict-cell .fix {
-    margin-top: 12px; padding-top: 12px;
-    border-top: 1px dashed var(--rule);
-    font-size: clamp(14px, 0.3vw + 13px, 17px); line-height: 1.55; color: var(--ink);
-  }
-  .slide-row .verdict-cell .fix em { font-style: italic; color: var(--glow); }
-  .slide-row .verdict-cell .fix::before {
-    content: "Fix → "; font-family: 'JetBrains Mono', monospace;
-    font-size: clamp(10px, 0.2vw + 9px, 12px); letter-spacing: 0.18em; text-transform: uppercase;
-    color: var(--glow); font-weight: 700; margin-right: 6px;
-  }
+  .q-row .status.answered { background: var(--glow-soft); color: var(--glow); border: 1px solid var(--glow-line); }
+  .q-row .status.partial { background: var(--warm-soft); color: var(--warm); border: 1px solid rgba(212, 163, 86, 0.4); }
+  .q-row .status.open { background: rgba(238, 88, 86, 0.16); color: #ee5856; border: 1px solid rgba(238, 88, 86, 0.4); }
   @media (max-width: 720px) {
-    .slide-row { grid-template-columns: 36px 1fr; gap: 14px; }
-    .slide-row .num { font-size: 28px; }
-    .slide-row .verdict-cell { grid-column: 1 / -1; padding-left: 50px; }
+    .q-row { grid-template-columns: 36px 1fr; gap: 12px; }
+    .q-row .status { grid-column: 2 / 3; justify-self: start; margin-top: 8px; }
   }
 
-  /* MISSING */
-  .missing-grid {
+  /* KEY FEEDBACK cards */
+  .feed-grid {
     grid-column: 1 / 13;
-    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px;
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px;
     background: var(--rule);
   }
-  @media (max-width: 880px) { .missing-grid { grid-template-columns: repeat(2, 1fr); } }
-  @media (max-width: 600px) { .missing-grid { grid-template-columns: 1fr; } }
-  .missing {
-    background: var(--bg-1);
-    padding: 22px 24px;
-    display: grid; grid-template-columns: 32px 1fr; gap: 14px;
+  @media (max-width: 720px) { .feed-grid { grid-template-columns: 1fr; } }
+  .feed {
+    background: var(--bg-1); padding: 22px 24px;
+    display: grid; grid-template-columns: 36px 1fr; gap: 14px;
     transition: background 240ms var(--ease);
     position: relative; overflow: hidden;
   }
-  .missing::before {
+  .feed::before {
     content: ""; position: absolute; inset: 0;
-    background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(125, 211, 192, 0.14), transparent 50%);
+    background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(125, 211, 192, 0.12), transparent 50%);
     opacity: 0; transition: opacity 280ms ease;
     pointer-events: none;
   }
-  .missing:hover { background: var(--bg-2); }
-  .missing:hover::before { opacity: 1; }
-  .missing > * { position: relative; z-index: 1; }
-  .missing .n {
-    transition: transform 380ms var(--ease), text-shadow 380ms var(--ease);
-  }
-  .missing:hover .n {
-    transform: scale(1.12);
-    text-shadow: 0 0 20px rgba(125, 211, 192, 0.6);
-  }
-  .missing .n {
+  .feed:hover { background: var(--bg-2); }
+  .feed:hover::before { opacity: 1; }
+  .feed > * { position: relative; z-index: 1; }
+  .feed .n {
     font-family: 'Instrument Serif', serif; font-style: italic;
     color: var(--glow); font-size: clamp(26px, 0.5vw + 24px, 30px); line-height: 0.9; text-align: right;
+    transition: transform 380ms var(--ease), text-shadow 380ms var(--ease);
   }
-  .missing .t {
-    font-family: 'Manrope', sans-serif; font-weight: 700;
-    font-size: clamp(15px, 0.3vw + 14px, 17px); color: var(--ink); line-height: 1.3;
-    margin-bottom: 6px; letter-spacing: -0.008em;
+  .feed:hover .n { transform: scale(1.12); text-shadow: 0 0 20px rgba(125, 211, 192, 0.55); }
+  .feed .who {
+    font-family: 'JetBrains Mono', monospace; font-size: clamp(10px, 0.2vw + 9px, 11.5px);
+    letter-spacing: 0.18em; text-transform: uppercase; color: var(--glow); font-weight: 700;
+    margin-bottom: 6px;
   }
-  .missing .t .it { font-family: 'Instrument Serif', serif; font-style: italic; color: var(--glow); font-weight: 400; font-size: 1.08em; }
-  .missing .d { font-size: clamp(13.5px, 0.3vw + 12.5px, 15.5px); line-height: 1.55; color: var(--ink-1); }
+  .feed .t {
+    font-size: clamp(14.5px, 0.3vw + 13.5px, 16.5px); line-height: 1.55; color: var(--ink-1);
+  }
+  .feed .t em { font-family: 'Instrument Serif', serif; font-style: italic; color: var(--glow); font-weight: 400; }
+  .feed .t strong { color: var(--ink); font-weight: 700; }
 
-  /* CONTRADICTIONS */
-  .contra { grid-column: 1 / 13; }
-  .contra-row {
-    display: grid; grid-template-columns: 40px 1fr;
-    gap: 18px; padding: 18px 0;
+  /* ACTION ITEMS table */
+  .actions-wrap { grid-column: 1 / 13; overflow-x: auto; }
+  .actions-table {
+    width: 100%; border-collapse: separate; border-spacing: 0;
+    border: 1px solid var(--rule-mid);
+  }
+  .actions-table thead th {
+    background: rgba(125, 211, 192, 0.04);
+    text-align: left; padding: 14px 18px;
+    font-family: 'JetBrains Mono', monospace; font-size: clamp(10.5px, 0.2vw + 9.5px, 12px);
+    letter-spacing: 0.22em; text-transform: uppercase; color: var(--glow); font-weight: 700;
+    border-bottom: 1px solid var(--rule-mid);
+  }
+  .actions-table td {
+    padding: 16px 18px; border-bottom: 1px solid var(--rule);
+    vertical-align: top;
+    font-size: clamp(14px, 0.3vw + 13px, 16px); line-height: 1.5;
+  }
+  .actions-table tbody tr:last-child td { border-bottom: none; }
+  .actions-table tbody tr { transition: background 200ms var(--ease); }
+  .actions-table tbody tr:hover { background: rgba(125, 211, 192, 0.04); }
+  .actions-table .act { color: var(--ink); font-weight: 500; }
+  .actions-table .act em { font-family: 'Instrument Serif', serif; font-style: italic; color: var(--glow); font-weight: 400; }
+  .actions-table .own { color: var(--ink-1); font-weight: 600; white-space: nowrap; }
+  .actions-table .due {
+    font-family: 'JetBrains Mono', monospace; font-size: clamp(12.5px, 0.2vw + 11.5px, 14px);
+    color: var(--glow); font-weight: 600; white-space: nowrap;
+  }
+
+  /* COMMITMENTS list */
+  .commits-list { grid-column: 1 / 13; list-style: none; }
+  .commit-row {
+    display: grid; grid-template-columns: 140px 1fr;
+    gap: 24px; padding: 18px 0;
     border-bottom: 1px solid var(--rule);
+    align-items: start;
   }
-  .contra-row:last-child { border-bottom: none; }
-  .contra-row .ix {
-    font-family: 'Instrument Serif', serif; font-style: italic;
-    color: var(--hot); font-size: clamp(24px, 0.5vw + 22px, 28px); line-height: 1.4; text-align: right;
+  .commit-row:last-child { border-bottom: none; }
+  .commit-row .who {
+    font-family: 'JetBrains Mono', monospace; font-size: clamp(11px, 0.2vw + 10px, 13px);
+    letter-spacing: 0.18em; text-transform: uppercase; color: var(--glow); font-weight: 700;
+    padding-top: 2px;
   }
-  .contra-row strong {
-    display: block; font-family: 'Manrope', sans-serif;
-    font-weight: 700; font-size: clamp(16px, 0.3vw + 15px, 19px); color: var(--ink);
-    margin-bottom: 6px; line-height: 1.3; letter-spacing: -0.008em;
-  }
-  .contra-row strong .it { font-family: 'Instrument Serif', serif; font-style: italic; color: var(--hot); font-weight: 400; }
-  .contra-row p { font-size: clamp(14.5px, 0.3vw + 13.5px, 16.5px); line-height: 1.6; color: var(--ink-1); }
-  .contra-row p em { font-style: italic; color: var(--hot); }
+  .commit-row .commit { font-size: clamp(14.5px, 0.3vw + 13.5px, 16.5px); line-height: 1.55; color: var(--ink-1); }
+  .commit-row .commit em { font-family: 'Instrument Serif', serif; font-style: italic; color: var(--glow); font-weight: 400; }
+  .commit-row .commit strong { color: var(--ink); font-weight: 700; }
+  @media (max-width: 720px) { .commit-row { grid-template-columns: 1fr; gap: 8px; } }
 
   /* CLOSER */
-  .closer { padding: 110px 0 130px; }
+  .closer { padding: 90px 0 110px; }
   .closer-inner { grid-column: 3 / 13; text-align: right; }
   @media (max-width: 880px) { .closer-inner { grid-column: 1 / 13; text-align: left; } }
   @media (max-width: 600px) { .closer-inner { grid-column: 1 / -1; } }
   .closer-mark {
     font-family: 'Instrument Serif', serif; font-style: italic;
-    color: var(--hot); font-size: 84px; line-height: 0.7;
+    color: var(--glow); font-size: 84px; line-height: 0.7;
     margin-bottom: 16px; display: block;
-    text-shadow: 0 0 32px rgba(238, 88, 86, 0.5);
+    text-shadow: 0 0 32px rgba(125, 211, 192, 0.55);
     animation: float-mark 6s ease-in-out infinite alternate;
-    transform-origin: center;
   }
   @keyframes float-mark {
-    0%   { transform: translateY(0) rotate(-1deg); text-shadow: 0 0 32px rgba(238, 88, 86, 0.5); }
-    100% { transform: translateY(-10px) rotate(1deg); text-shadow: 0 0 44px rgba(238, 88, 86, 0.75), 0 0 12px rgba(238, 88, 86, 0.4); }
+    0%   { transform: translateY(0) rotate(-1deg); }
+    100% { transform: translateY(-10px) rotate(1deg); text-shadow: 0 0 44px rgba(125, 211, 192, 0.8); }
   }
-
-  /* Subtle breathing pulse on the verdict card */
-  .verdict { animation: breathe 8s ease-in-out infinite alternate; }
-  @keyframes breathe {
-    0%   { box-shadow: 0 0 0 rgba(238, 88, 86, 0); }
-    100% { box-shadow: 0 0 50px rgba(238, 88, 86, 0.08), inset 0 0 30px rgba(238, 88, 86, 0.03); }
-  }
-
-  /* Soft fade-up on closer-stat pills */
-  .closer-stat {
-    transition: transform 360ms var(--ease), border-color 360ms var(--ease), background 360ms var(--ease);
-  }
-  .closer-stat:hover {
-    transform: translateY(-3px);
-    border-color: var(--hot);
-    background: rgba(238, 88, 86, 0.06);
-  }
-  .closer-eb {
-    font-family: 'JetBrains Mono', monospace; font-size: clamp(11px, 0.2vw + 10px, 13px);
-    letter-spacing: 0.32em; text-transform: uppercase; color: var(--hot);
-    font-weight: 600; margin-bottom: 28px;
-    display: inline-flex; align-items: center; gap: 14px;
-  }
-  .closer-eb::after, .closer-eb::before { content: ""; width: 28px; height: 1px; background: var(--hot); box-shadow: 0 0 6px var(--hot); }
-  @media (max-width: 880px) { .closer-eb::before { display: none; } }
   .closer-line {
     font-family: 'Manrope', sans-serif; font-weight: 600;
-    font-size: clamp(26px, 3vw, 42px);
-    line-height: 1.22; letter-spacing: -0.022em; color: var(--ink); margin: 0 0 32px;
+    font-size: clamp(22px, 2.4vw, 32px); line-height: 1.3;
+    letter-spacing: -0.018em; color: var(--ink); margin: 0 0 24px;
+    max-width: 36ch; margin-left: auto;
   }
-  .closer-line .it { font-family: 'Instrument Serif', serif; font-style: italic; color: var(--hot); font-weight: 400; }
-  .closer-line .em { border-bottom: 2px solid var(--hot); padding-bottom: 2px; }
-  .closer-stat-row { display: flex; justify-content: flex-end; gap: 8px; flex-wrap: wrap; }
-  @media (max-width: 880px) { .closer-stat-row { justify-content: flex-start; } }
-  .closer-stat {
-    display: inline-flex; align-items: center; gap: 8px;
-    padding: 9px 16px; background: rgba(12, 14, 20, 0.5);
-    backdrop-filter: blur(10px); border: 1px solid var(--rule-mid);
-    font-family: 'JetBrains Mono', monospace; font-size: clamp(11px, 0.2vw + 10px, 13px);
-    color: var(--ink-1); font-weight: 600;
-    letter-spacing: 0.16em; text-transform: uppercase;
-  }
-  .closer-stat strong { color: var(--hot); }
-
-  footer.colo {
-    grid-column: 1 / 13;
-    border-top: 1px solid var(--rule); padding: 22px 0 56px;
-    display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;
-    font-family: 'JetBrains Mono', monospace; font-size: clamp(11px, 0.2vw + 10px, 13px);
-    letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-2); font-weight: 600;
-  }
-  footer.colo em { font-family: 'Instrument Serif', serif; font-style: italic; color: var(--hot); font-size: clamp(13px, 0.3vw + 12px, 15px); letter-spacing: 0; text-transform: none; margin: 0 2px; }
+  @media (max-width: 880px) { .closer-line { margin-left: 0; } }
+  .closer-line .it { font-family: 'Instrument Serif', serif; font-style: italic; color: var(--glow); font-weight: 400; }
 
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
     .veil { opacity: 1; transform: none; }
-    .atm-blob, .closer-mark, .verdict { animation: none; }
-    h1.hero .word, .hero-sub, .hero-disclaimer { opacity: 1; transform: none; }
+    .atm-blob, .closer-mark, .summary { animation: none; }
+    h1.hero .word, .hero-sub, .hero-meta-row { opacity: 1; transform: none; }
   }
 </style>
 </head>
@@ -467,263 +388,186 @@
 
   <section class="hero spread">
     <div class="hero-folio">
-      <span class="ix">II.</span>
-      <span>Notes on the deck</span>
+      <span class="ix">I.</span>
+      <span>Meeting summary</span>
     </div>
-    <div class="hero-title-wrap veil lit">
-      <h1 class="hero"><span class="word">The deck,</span> <span class="word it">slide by</span> <span class="word it">slide.</span></h1>
-      <p class="hero-sub">Read it twice. Walked through it against the two-hour recording. Here's where it's losing you — and the five moves that fix the next CFO meeting.</p>
-      <div class="hero-disclaimer">You know what Sandy does. This is just what the deck is doing to <em>that story</em> when it's in someone else's hands.</div>
-    </div>
-  </section>
-
-  <section class="bay spread" id="verdict">
-    <div class="sec-head">
-      <span class="sec-num"><em>i.</em> The read</span>
-      <h2 class="sec">Two <span class="it">lines.</span></h2>
-      <span class="sec-meta">If you read nothing else</span>
-    </div>
-    <div class="veil verdict">
-      <p>Strong story. <span class="it">Wrong order.</span></p>
-      <p>The deck is hiding what should be on <span class="em">slide one.</span></p>
+    <div class="hero-title-wrap">
+      <h1 class="hero">
+        <span class="word">Diego &amp; the</span>
+        <span class="word it">Jill Sandley</span>
+        <span class="word">roundtable.</span>
+      </h1>
+      <p class="hero-sub">What was asked, what was committed, and the <em>action items</em> on Diego's plate by Monday.</p>
     </div>
   </section>
 
-  <section class="bay spread" id="slides">
+  <section class="bay spread" id="summary">
     <div class="sec-head">
-      <span class="sec-num"><em>ii.</em> Slide by slide</span>
-      <h2 class="sec">What each slide <span class="it">does to the story.</span></h2>
-      <span class="sec-meta">All twelve</span>
+      <span class="sec-num"><em>i.</em> Executive summary</span>
+      <h2 class="sec">The <span class="it">read.</span></h2>
+      <span class="sec-meta">Two-three sentences</span>
     </div>
-    <ul class="slide-list veil d1">
+    <div class="veil summary">
+      <p>Sandy walks out of the room with three things to fix by Monday: the <strong>CFO vocabulary gap</strong> (DSO, NCR, GCR, reimbursement), the <strong>entry motion</strong> into large Epic shops (<span class="it">physicians' org first, not C-suite</span>), and the <strong>analytics dashboard release</strong> that anchors the rest of the pitch. The IPA-first entry is the strategic shift; the other two are tactical.</p>
+    </div>
+  </section>
 
-      <li class="slide-row">
-        <div class="num">01.</div>
-        <div class="title">
-          <strong>Cover · "The AI cure for healthcare's admin overload"</strong>
-          <div class="what">Sandy logo. "AI cure for healthcare's admin overload" tagline.</div>
-          <span class="tag">REWRITE</span>
-        </div>
-        <div class="verdict-cell">
-          <div class="label">The problem</div>
-          <p>"AI cure for admin overload" is the same opener every healthcare-AI deck on the planet uses. "Cure" doesn't differentiate. A CFO has seen 40 of these.</p>
-          <div class="fix"><em>EHR-agnostic revenue intelligence for hospitals that can't risk another vendor war.</em> Lead with the positioning, not the metaphor.</div>
-        </div>
+  <section class="bay spread" id="questions">
+    <div class="sec-head">
+      <span class="sec-num"><em>ii.</em> Top questions</span>
+      <h2 class="sec">What the room <span class="it">asked.</span></h2>
+      <span class="sec-meta">Five</span>
+    </div>
+    <ul class="q-list veil">
+      <li class="q-row">
+        <div class="num">i.</div>
+        <div class="body"><strong>David —</strong> How does Sandy access large Epic shops (UMMC, Sarasota Memorial)?</div>
+        <div class="status answered">Answered</div>
       </li>
-
-      <li class="slide-row">
-        <div class="num">02.</div>
-        <div class="title">
-          <strong>"Healthcare Has a Hidden Crisis"</strong>
-          <div class="what">$150B+ losses, 15-20% claim rejections, burned-out staff bullets.</div>
-          <span class="tag">CUT 40%</span>
-        </div>
-        <div class="verdict-cell">
-          <div class="label">The problem</div>
-          <p>The stats are correct. The slide is generic. Every CFO knows the $150B number. You're spending a slide telling them their own pain — they wanted you to spend it telling them what <em>you</em> see they don't.</p>
-          <div class="fix">Replace with the NYC $300K appeal-window-closed story. <em>One specific scar</em> beats four generic stats.</div>
-        </div>
+      <li class="q-row">
+        <div class="num">ii.</div>
+        <div class="body"><strong>David —</strong> Where's Diego's CFO-vocabulary (DSO, NCR, GCR, reimbursement timeframe)?</div>
+        <div class="status open">Open</div>
       </li>
-
-      <li class="slide-row">
-        <div class="num">03.</div>
-        <div class="title">
-          <strong>"Luckily, There's a Cure" · Meet Sandy</strong>
-          <div class="what">"She works the night shift (and the day shift, too)." Personifies the AI.</div>
-          <span class="tag">KILL</span>
-        </div>
-        <div class="verdict-cell">
-          <div class="label">The problem</div>
-          <p>Cutesy. Personifying the AI as a female employee named "Sandy" creates brand confusion (Sandy = company AND AI worker AND product?) and reads as <em>consumer pitch energy</em> in front of a hospital CIO. Burned-out staff don't want "a new teammate" — they want fewer denials.</p>
-          <div class="fix">Replace with a single sentence: <em>"Sandy is the revenue intelligence layer for pre-care."</em> Done.</div>
-        </div>
+      <li class="q-row">
+        <div class="num">iii.</div>
+        <div class="body"><strong>Bruce / Chris —</strong> Why isn't Sandy productizing its data as analytics?</div>
+        <div class="status partial">Partial</div>
       </li>
-
-      <li class="slide-row">
-        <div class="num">04.</div>
-        <div class="title">
-          <strong>Mission slide (black)</strong>
-          <div class="what">"The only AI platform for healthcare that connects every pre-care workflow, powering patient access, revenue, and outcomes."</div>
-          <span class="tag">PICK ONE</span>
-        </div>
-        <div class="verdict-cell">
-          <div class="label">The problem</div>
-          <p>Three nouns at the end — <em>access, revenue, outcomes</em> — means you're still hedging on what Sandy IS. You said it yourself in the pitch: <em>revenue intelligence.</em> The other two are downstream effects, not the wedge.</p>
-          <div class="fix">Cut "patient access" and "outcomes." Land on revenue. Promise one thing, deliver it, then expand the story in person.</div>
-        </div>
+      <li class="q-row">
+        <div class="num">iv.</div>
+        <div class="body"><strong>John —</strong> How is PHI protected before LLM inference?</div>
+        <div class="status answered">Answered</div>
       </li>
-
-      <li class="slide-row">
-        <div class="num">05.</div>
-        <div class="title">
-          <strong>"Start Upstream &amp; Everything Downstream Improves"</strong>
-          <div class="what">Pre-care (Scheduling, Intake, Eligibility, Auths) → Care → Post-care flow.</div>
-          <span class="tag">CONTRADICTS</span>
-        </div>
-        <div class="verdict-cell">
-          <div class="label">The problem</div>
-          <p>Pre-care bullet #1 is <em>Scheduling.</em> You said in the meeting: <em>"we don't build scheduling."</em> Bruce was right. The slide directly contradicts your own scope statement — a CIO who's seen both will catch it.</p>
-          <div class="fix">Drop "Scheduling" from the Pre-care column. Replace with <em>Coverage verification</em> or <em>Eligibility intelligence.</em></div>
-        </div>
-      </li>
-
-      <li class="slide-row">
-        <div class="num">06.</div>
-        <div class="title">
-          <strong>"Trust Isn't an Add-On"</strong>
-          <div class="what">HIPAA, SOC 2, EHR/HMS integration, auditability bullets.</div>
-          <span class="tag">PROMOTE</span>
-        </div>
-        <div class="verdict-cell">
-          <div class="label">The problem</div>
-          <p>The bullets are correct. What's <em>missing</em> is the line that outweighs all six of them: <em>"AWS wanted to buy our de-identification IP."</em> That single sentence beats every checkbox on the slide. It's nowhere.</p>
-          <div class="fix">Add a top callout: <em>"AWS offered to acquire our de-id IP. We kept it."</em> Move this slide from position 6 to position 2.</div>
-        </div>
-      </li>
-
-      <li class="slide-row">
-        <div class="num">07.</div>
-        <div class="title">
-          <strong>"The AI Operating Layer for Healthcare"</strong>
-          <div class="what">Patient-Centric, Open Core/Open Ecosystem, Plug-and-Play bullets.</div>
-          <span class="tag">CUT</span>
-        </div>
-        <div class="verdict-cell">
-          <div class="label">The problem</div>
-          <p>"Architected to unlock AI-native operations for the entire healthcare ecosystem" is consultant-speak. The phrase "operating layer" is what a16z writes about Snowflake — it doesn't survive a CFO's first question.</p>
-          <div class="fix">Cut the slide. The positioning belongs in the cover line, not buried as slide 7.</div>
-        </div>
-      </li>
-
-      <li class="slide-row">
-        <div class="num">08.</div>
-        <div class="title">
-          <strong>"Where Sandy Sits Today"</strong>
-          <div class="what">Multiple pilots scheduled. Active discussions with hospital systems nationwide.</div>
-          <span class="tag">NAME NAMES</span>
-        </div>
-        <div class="verdict-cell">
-          <div class="label">The problem</div>
-          <p>"Multiple pilots scheduled" and "active discussions with leading hospital systems nationwide" reads as <em>vaporware</em> to anyone who's been pitched twice. The Texas 22-clinic deployment is real, proven, and quantified — that's the slide.</p>
-          <div class="fix">Replace with: <em>"Texas, 22 clinics, 1,000-patient roster, month one: 1.5 days + Saturday returned. Three more pilots Jan 2026."</em> Specific beats sweeping.</div>
-        </div>
-      </li>
-
-      <li class="slide-row">
-        <div class="num">09.</div>
-        <div class="title">
-          <strong>"The Humans Behind the AI"</strong>
-          <div class="what">Diego (3 exits — Google, 8x8, Snowflake; Rad AI; MIT). Alex (3 M&amp;A — Fuze, Jambb; Harvard MBA). Logo wall.</div>
-          <span class="tag">MOVE FORWARD</span>
-        </div>
-        <div class="verdict-cell">
-          <div class="label">The problem</div>
-          <p>The content is the strongest founder slide possible. <em>3 exits + MIT + Snowflake + Rad AI.</em> But it sits at slide 9. Pre-seed, founder credibility is your moat — bury it at slide 9 and the CFO has already decided. The CrossFit and Reuters logos add noise next to AWS, Google, Rad AI.</p>
-          <div class="fix">Move to slide 3 or 4. Strip CrossFit + Reuters. Lead bios with the exits, not "deep history and shared experience."</div>
-        </div>
-      </li>
-
-      <li class="slide-row">
-        <div class="num">10.</div>
-        <div class="title">
-          <strong>"A Flagship Use Case at National Scale"</strong>
-          <div class="what">500+ locations, 2M patients/month, 8-figure annual potential, VoB → prior auths expansion.</div>
-          <span class="tag tag">PROMOTE</span>
-        </div>
-        <div class="verdict-cell">
-          <div class="label">The problem</div>
-          <p>This is the slide that should make a CFO lean forward. 500 locations, 2M patients/mo, 8-figure ARR potential — and it's at slide 10. By the time you reach it, the room has already formed an opinion on the metaphor + the cutesy AI persona.</p>
-          <div class="fix">Move to slide 5 (after the team slide). Add the client logo if NDA permits — anonymized is fine.</div>
-        </div>
-      </li>
-
-      <li class="slide-row">
-        <div class="num">11.</div>
-        <div class="title">
-          <strong>"What Sandy Looks Like in Practice (Book a Demo!)"</strong>
-          <div class="what">Tiny dashboard screenshot.</div>
-          <span class="tag">UNREADABLE</span>
-        </div>
-        <div class="verdict-cell">
-          <div class="label">The problem</div>
-          <p>The screenshot is so small no one in a hospital boardroom can read it. You apologized for slides not rendering on the call — this is one of them. A dashboard the CFO can't read is worse than no dashboard.</p>
-          <div class="fix">Replace with <em>one zoomed callout</em>: the variance flag that caught the $300K NYC underpayment. One number, one slide. The dashboard goes in the demo, not the deck.</div>
-        </div>
-      </li>
-
-      <li class="slide-row">
-        <div class="num">12.</div>
-        <div class="title">
-          <strong>"Thank You!" / contact slide</strong>
-          <div class="what">Logo + URL + email.</div>
-          <span class="tag">BIGGEST MISS</span>
-        </div>
-        <div class="verdict-cell">
-          <div class="label">The problem</div>
-          <p>You absorbed two hours of feedback and closed with "Thank you" and an email. <em>No ask.</em> No three names. No specific intro request. The room handed you the right to ask and you walked away with a website URL.</p>
-          <div class="fix">Replace with three asks: <em>"Two intros to revenue cycle leaders we haven't spoken to. One CISO who'll grade our de-id IP. Names within 48 hours."</em> Same energy you brought to slide one.</div>
-        </div>
+      <li class="q-row">
+        <div class="num">v.</div>
+        <div class="body"><strong>Chris —</strong> Is a patient-facing RAG for aftercare on the roadmap?</div>
+        <div class="status answered">Answered</div>
       </li>
     </ul>
   </section>
 
-  <section class="bay spread" id="missing">
+  <section class="bay spread" id="feedback">
     <div class="sec-head">
-      <span class="sec-num"><em>iii.</em> What's not in there</span>
-      <h2 class="sec">The slides that <span class="it">should exist.</span></h2>
-      <span class="sec-meta">Six gaps</span>
+      <span class="sec-num"><em>iii.</em> Key feedback</span>
+      <h2 class="sec">What the room <span class="it">told Diego.</span></h2>
+      <span class="sec-meta">Five</span>
     </div>
-    <div class="veil missing-grid">
-      <div class="missing"><div class="n">i.</div><div><div class="t">The <span class="it">de-id IP slide</span></div><div class="d">No standalone slide for the actual moat. AWS-grade IP gets a bullet on the trust slide. It needs its own page at position 2 or 3.</div></div></div>
-      <div class="missing"><div class="n">ii.</div><div><div class="t">A <span class="it">finance taxonomy</span> slide</div><div class="d">No NCR, DSO, GCR, DOAR vocabulary visible across 12 slides. The CFO can't grade you against their dashboard. David's central note, still unaddressed.</div></div></div>
-      <div class="missing"><div class="n">iii.</div><div><div class="t">Named <span class="it">customer logo</span> slide</div><div class="d">Texas 22-clinic + 500-location network = two real proof points. Where are the logos (NDA-permitting anonymized counts at minimum)?</div></div></div>
-      <div class="missing"><div class="n">iv.</div><div><div class="t">The <span class="it">90-second video clip</span></div><div class="d">No founder-on-camera moment. CFOs Google you between pitches. A 90-second video of Diego explaining the IPA approach lives where exactly?</div></div></div>
-      <div class="missing"><div class="n">v.</div><div><div class="t">The <span class="it">"why now"</span> slide</div><div class="d">Why does this pitch happen in 2026 and not 2024? GenAI-based de-id, Whisper-class transcription, MCP open standards — there's a "why now" story, and the deck doesn't tell it.</div></div></div>
-      <div class="missing"><div class="n">vi.</div><div><div class="t">The <span class="it">competitive map</span></div><div class="d">No mention of Notable, Olive, Waystar, Availity, Change. Every CFO will ask. Silence reads as "haven't thought about it."</div></div></div>
-    </div>
-  </section>
-
-  <section class="bay spread" id="contradictions">
-    <div class="sec-head">
-      <span class="sec-num"><em>iv.</em> Self-contradictions</span>
-      <h2 class="sec">Where the deck <span class="it">argues with itself.</span></h2>
-      <span class="sec-meta">Three places</span>
-    </div>
-    <div class="veil contra">
-      <div class="contra-row"><div class="ix">i.</div><div><strong>Scheduling, both ways</strong><p>Slide 5 includes <em>Scheduling</em> under pre-care benefits. You said on the call you <em>don't build scheduling.</em> A buyer who has heard both will catch the leak.</p></div></div>
-      <div class="contra-row"><div class="ix">ii.</div><div><strong>"Operating layer" vs <span class="it">"revenue intelligence"</span></strong><p>The mission slide says "AI platform... access, revenue, outcomes." Slide 7 elevates it to "AI operating layer for healthcare." Your own positioning in the call was <em>revenue intelligence.</em> Three positionings in one deck.</p></div></div>
-      <div class="contra-row"><div class="ix">iii.</div><div><strong>Cute AI persona vs CFO buyer</strong><p>Slide 3 personifies Sandy as a teammate who works the night shift. Slide 6 sells SOC 2 / HIPAA / hospital IT review. The audiences don't match — the cutesy version turns off the buyer the trust slide is for.</p></div></div>
-    </div>
-  </section>
-
-  <section class="closer spread veil" id="five-fixes">
-    <div class="closer-inner">
-      <span class="closer-mark">⌘</span>
-      <div class="closer-eb">The five fixes</div>
-      <p class="closer-line">
-        Move <span class="it">"Humans Behind the AI"</span> to slide 3. Move <span class="it">"Trust"</span> + the AWS line to slide 2. Move <span class="it">"Flagship Use Case"</span> to slide 5. Kill <span class="it">"Operating Layer."</span> Replace <span class="it">"Thank You"</span> with three asks. <span class="em">Everything else can wait.</span>
-      </p>
-      <div class="closer-stat-row">
-        <span class="closer-stat">Slides touched · <strong>5 of 12</strong></span>
-        <span class="closer-stat">Time to do it · <strong>90 min</strong></span>
-        <span class="closer-stat">Good luck Monday</span>
+    <div class="veil feed-grid">
+      <div class="feed">
+        <div class="n">i.</div>
+        <div>
+          <div class="who">David</div>
+          <div class="t">Sandy is missing the finance vocabulary CFOs respond to — <em>DSO, NCR, GCR, reimbursement timeframe, days outstanding AR.</em> Pair CFO ROI with <strong>RVUs</strong> for clinicians; not patient experience for administrators.</div>
+        </div>
+      </div>
+      <div class="feed">
+        <div class="n">ii.</div>
+        <div>
+          <div class="who">David</div>
+          <div class="t">For large Epic shops, enter via the <em>physicians' organization</em> (IPA), pilot with tech-savvy liaisons, grow into the enterprise. <strong>First Physicians Group + Sarasota Memorial</strong> is the proof pattern.</div>
+        </div>
+      </div>
+      <div class="feed">
+        <div class="n">iii.</div>
+        <div>
+          <div class="who">Bruce / Chris</div>
+          <div class="t">Sandy sits on data nobody else has — forecast 7-15-day revenue per practice, flag cancellations as lost-revenue events to the CFO, surface negotiated-rate comparisons. <em>"Be the integrator and take a piece of every transaction."</em></div>
+        </div>
+      </div>
+      <div class="feed">
+        <div class="n">iv.</div>
+        <div>
+          <div class="who">Ryan</div>
+          <div class="t">Hospitals are nonprofits — <strong>cash flow matters more than topline.</strong> Design analytics around DSO reduction + cash-flow predictability.</div>
+        </div>
+      </div>
+      <div class="feed">
+        <div class="n">v.</div>
+        <div>
+          <div class="who">David</div>
+          <div class="t">Use <em>"distress interaction reduction"</em> framing (borrowed from retail's "distress purchase") for the CMO and case-management audiences.</div>
+        </div>
       </div>
     </div>
   </section>
 
+  <section class="bay spread" id="actions">
+    <div class="sec-head">
+      <span class="sec-num"><em>iv.</em> Action items</span>
+      <h2 class="sec">What was <span class="it">committed.</span></h2>
+      <span class="sec-meta">Five rows</span>
+    </div>
+    <div class="actions-wrap veil">
+      <table class="actions-table">
+        <thead>
+          <tr><th>Action item</th><th>Owner</th><th>Deadline</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="act">Prep Diego with <em>DSO / NCR / GCR / reimbursement</em> vocabulary + analytics talking points for the UMMC CTO meeting</td>
+            <td class="own">David</td>
+            <td class="due">Next week</td>
+          </tr>
+          <tr>
+            <td class="act">Provide David the data Sandy actually has so he doesn't oversell during prep</td>
+            <td class="own">Diego</td>
+            <td class="due">Next week</td>
+          </tr>
+          <tr>
+            <td class="act">Ship Sandy's analytics / reporting dashboard</td>
+            <td class="own">Sandy Health (Diego)</td>
+            <td class="due">Next week</td>
+          </tr>
+          <tr>
+            <td class="act">Ship patient education citations workflow</td>
+            <td class="own">Sandy Health (Diego)</td>
+            <td class="due">Within 2 weeks</td>
+          </tr>
+          <tr>
+            <td class="act">Ship claims submission workflow</td>
+            <td class="own">Sandy Health (Diego)</td>
+            <td class="due">Before EOQ4 (target)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="bay spread" id="commits">
+    <div class="sec-head">
+      <span class="sec-num"><em>v.</em> Commitments</span>
+      <h2 class="sec">Who took <span class="it">what.</span></h2>
+      <span class="sec-meta">Two speakers</span>
+    </div>
+    <ul class="commits-list veil">
+      <li class="commit-row">
+        <div class="who">David</div>
+        <div class="commit">Will prep Diego next week with <em>DSO / NCR / GCR / reimbursement-timeframe</em> vocabulary and analytics talking points for the <strong>UMMC CTO meeting</strong> the Monday after next.</div>
+      </li>
+      <li class="commit-row">
+        <div class="who">Diego</div>
+        <div class="commit">Accepted David's prep offer; will provide Sandy's actual data inventory during prep so David doesn't oversell. Committed to ship: <strong>analytics dashboard next week</strong>, <strong>patient citations within two weeks</strong>, <strong>claims submission before EOQ4.</strong></div>
+      </li>
+    </ul>
+  </section>
+
+  <section class="closer spread" id="end">
+    <div class="closer-inner">
+      <span class="closer-mark">⌘</span>
+      <p class="closer-line">Source: <span class="it">2h 18m</span> recording transcribed locally via Whisper. Items <span class="it">not in the recording</span> are excluded.</p>
+    </div>
+  </section>
 
 </main>
 
 <script>
-  /* Scroll reveal */
   (function () {
     const io = new IntersectionObserver((entries) => {
       entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('lit'); io.unobserve(e.target); } });
     }, { threshold: 0.08, rootMargin: '0px 0px -8% 0px' });
     document.querySelectorAll('.veil:not(.lit)').forEach(el => io.observe(el));
   })();
-
-  /* Scroll progress bar */
   (function () {
     const bar = document.getElementById('scrollprogress');
     if (!bar) return;
@@ -736,16 +580,11 @@
       bar.style.width = pct + '%';
       ticking = false;
     }
-    window.addEventListener('scroll', () => {
-      if (!ticking) { window.requestAnimationFrame(update); ticking = true; }
-    }, { passive: true });
+    window.addEventListener('scroll', () => { if (!ticking) { window.requestAnimationFrame(update); ticking = true; } }, { passive: true });
     update();
   })();
-
-  /* Mouse-follow spotlight on slide rows + missing cards */
   (function () {
-    const targets = document.querySelectorAll('.slide-row, .missing');
-    targets.forEach(el => {
+    document.querySelectorAll('.q-row, .feed').forEach(el => {
       el.addEventListener('mousemove', (e) => {
         const r = el.getBoundingClientRect();
         el.style.setProperty('--mx', `${e.clientX - r.left}px`);
