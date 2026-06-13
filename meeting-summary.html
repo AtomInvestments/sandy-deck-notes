@@ -20,14 +20,14 @@
     --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
   }
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  html, body { height: 100%; }
+  html, body { min-height: 100%; }
   body {
     background: var(--bg-0); color: var(--ink);
     font-family: 'Manrope', system-ui, sans-serif;
-    font-size: clamp(13px, 0.45vw + 11px, 16px);
-    line-height: 1.55; font-weight: 400;
+    font-size: clamp(14px, 0.5vw + 12px, 17px);
+    line-height: 1.6; font-weight: 400;
     -webkit-font-smoothing: antialiased;
-    overflow: hidden;
+    overflow-x: hidden;
     text-rendering: optimizeLegibility;
   }
   ::selection { background: var(--glow); color: var(--bg-0); }
@@ -49,12 +49,12 @@
     opacity: 0.5; mix-blend-mode: overlay;
   }
 
-  /* BOARD — full viewport */
+  /* BOARD — flexible layout, scrolls naturally as content grows */
   .board {
     position: relative; z-index: 2;
-    height: 100vh;
+    min-height: 100vh;
     display: grid;
-    grid-template-rows: 38vh 1fr;
+    grid-template-rows: 38vh auto;
   }
 
   /* HERO IMAGE BAND */
@@ -150,42 +150,90 @@
     min-height: 0;
   }
 
-  /* MY TAKE strip */
+  /* KEY THEMES card — full executive summary */
   .take {
-    padding: clamp(12px, 1.4vh, 18px) clamp(16px, 1.4vw, 24px);
+    padding: clamp(22px, 3vh, 36px) clamp(22px, 2.2vw, 40px);
     background: linear-gradient(135deg, rgba(125, 211, 192, 0.06), rgba(12, 14, 20, 0.55));
     backdrop-filter: blur(20px); border: 1px solid var(--rule-mid);
     position: relative;
-    animation: breathe 8s ease-in-out infinite alternate;
     opacity: 0; transform: translateY(8px);
     animation: rise 900ms var(--ease-out-expo) 700ms forwards, breathe 8s ease-in-out infinite alternate 1.6s;
   }
   .take::before {
     content: ""; position: absolute; top: -1px; left: 0;
-    width: 80px; height: 1px;
+    width: 120px; height: 1px;
     background: linear-gradient(90deg, var(--glow), transparent);
     box-shadow: 0 0 10px var(--glow);
   }
   @keyframes rise { to { opacity: 1; transform: translateY(0); } }
   @keyframes breathe {
     0%   { box-shadow: 0 0 0 rgba(125, 211, 192, 0); }
-    100% { box-shadow: 0 0 36px rgba(125, 211, 192, 0.08), inset 0 0 24px rgba(125, 211, 192, 0.025); }
+    100% { box-shadow: 0 0 40px rgba(125, 211, 192, 0.08), inset 0 0 28px rgba(125, 211, 192, 0.025); }
   }
-  .take .label {
-    font-family: 'JetBrains Mono', monospace; font-size: clamp(9.5px, 0.25vw + 8px, 11.5px);
-    letter-spacing: 0.24em; text-transform: uppercase; color: var(--glow);
-    font-weight: 600; margin-bottom: 6px;
+  .take h3 {
+    font-family: 'Manrope', sans-serif; font-weight: 700;
+    font-size: clamp(20px, 1.4vw + 14px, 30px);
+    line-height: 1.1; letter-spacing: -0.022em;
+    color: var(--ink); margin: 0 0 14px;
   }
+  .take h3 .it { font-family: 'Instrument Serif', serif; font-style: italic; color: var(--glow); font-weight: 400; }
   .take p {
-    font-size: clamp(13px, 0.55vw + 11px, 17px);
-    line-height: 1.4; color: var(--ink-1);
-    margin: 0 0 8px; font-weight: 500;
+    font-size: clamp(14px, 0.5vw + 12px, 17px);
+    line-height: 1.65; color: var(--ink-1);
+    margin: 0 0 14px;
   }
   .take p:last-child { margin-bottom: 0; }
-  .take p:last-of-type { color: var(--ink); font-weight: 600; }
   .take p .it { font-family: 'Instrument Serif', serif; font-style: italic; color: var(--glow); font-weight: 400; font-size: 1.04em; }
   .take p strong { color: var(--ink); font-weight: 700; }
   .take p .em { border-bottom: 1.5px solid var(--glow); padding-bottom: 1px; }
+
+  .take .themes {
+    list-style: none; padding: 0;
+    margin: 18px 0 22px;
+    display: flex; flex-direction: column;
+    gap: clamp(14px, 1.4vh, 22px);
+  }
+  .take .themes li {
+    display: grid; grid-template-columns: clamp(40px, 3vw, 56px) 1fr;
+    gap: clamp(14px, 1.2vw, 22px);
+    align-items: start;
+    padding-left: clamp(4px, 0.4vw, 8px);
+    border-left: 1px solid var(--rule);
+    padding: 2px 0 2px clamp(14px, 1.2vw, 22px);
+    transition: border-color 280ms var(--ease);
+  }
+  .take .themes li:hover { border-left-color: var(--glow-line); }
+  .take .themes .num {
+    font-family: 'Instrument Serif', serif; font-style: italic;
+    color: var(--glow); font-size: clamp(28px, 1.6vw + 18px, 44px);
+    line-height: 1; text-align: right;
+    text-shadow: 0 0 16px rgba(125, 211, 192, 0.35);
+  }
+  .take .themes .ttl {
+    font-family: 'Manrope', sans-serif; font-weight: 700;
+    font-size: clamp(16px, 0.6vw + 13px, 20px);
+    line-height: 1.3; color: var(--ink);
+    margin: 0 0 6px; letter-spacing: -0.012em;
+  }
+  .take .themes .ttl .it { font-family: 'Instrument Serif', serif; font-style: italic; color: var(--glow); font-weight: 400; }
+  .take .themes .body {
+    font-size: clamp(13.5px, 0.45vw + 11.5px, 16px);
+    line-height: 1.6; color: var(--ink-1);
+  }
+  .take .themes .body em { font-family: 'Instrument Serif', serif; font-style: italic; color: var(--glow); font-weight: 400; }
+  .take .themes .body strong { color: var(--ink); font-weight: 600; }
+
+  .take .conclusion-head {
+    font-family: 'JetBrains Mono', monospace; font-size: clamp(10px, 0.3vw + 8.5px, 12px);
+    letter-spacing: 0.24em; text-transform: uppercase; color: var(--glow);
+    font-weight: 700; margin: 18px 0 10px;
+    padding-top: 18px; border-top: 1px solid var(--rule);
+    display: inline-flex; align-items: center; gap: 10px;
+  }
+  .take .conclusion-head::before {
+    content: ""; width: 28px; height: 1px;
+    background: var(--glow); box-shadow: 0 0 6px var(--glow);
+  }
 
   /* GRID below take — 3 columns */
   .grid {
@@ -520,11 +568,9 @@
   /* Make room for the player so content doesn't slide under it */
   .board { padding-bottom: 70px; }
 
-  /* Mobile / short viewport — allow scroll, stack columns */
+  /* Mobile / short viewport — stack columns */
   @media (max-width: 880px), (max-height: 640px) {
-    body { overflow: auto; }
-    .board { height: auto; min-height: 100vh; grid-template-rows: 38vh auto; padding-bottom: 110px; }
-    .content { min-height: 0; }
+    .board { padding-bottom: 110px; }
     .grid { grid-template-columns: 1fr; }
     .player { grid-template-columns: auto 1fr; grid-template-areas: "play meta" "scrub scrub" "controls controls"; gap: 8px; padding: 10px 16px; }
     .player .play { grid-area: play; }
@@ -574,10 +620,34 @@
   <section class="content">
 
     <div class="take">
-      <div class="label">My take</div>
-      <p>Sandy's pitch is in the right shape. The story tracks, the IP is real, the case study sells itself. The packaging is two notches off.</p>
-      <p><strong>One —</strong> the CFO vocabulary isn't there (<span class="it">DSO, NCR, GCR, reimbursement</span>). <strong>Two —</strong> wrong door at Epic shops; enter the IPA, not the C-suite. <strong>Three —</strong> the dashboard that anchors the pitch hasn't shipped.</p>
-      <p>Fix all three by Monday and <span class="em">the same room votes yes.</span></p>
+      <h3>Key Themes from the <span class="it">Roundtable.</span></h3>
+      <p>The overall sentiment from the room was positive. The consensus was that Sandy's core story is compelling, the IP is real, and the case study demonstrates meaningful value. The feedback was not centered around the viability of the company, but rather around how the value proposition is packaged and communicated to prospective buyers.</p>
+      <p>Three themes surfaced consistently throughout the discussion:</p>
+      <ol class="themes">
+        <li>
+          <div class="num">01</div>
+          <div>
+            <div class="ttl">Speak the language of the <span class="it">financial buyer.</span></div>
+            <div class="body">Several participants felt the pitch would benefit from stronger CFO-oriented messaging around <strong>DSO, NCR, GCR, reimbursement, cash conversion, margin improvement,</strong> and measurable financial outcomes. The clinical and operational value was understood, but the economic impact needs to be more explicit.</div>
+          </div>
+        </li>
+        <li>
+          <div class="num">02</div>
+          <div>
+            <div class="ttl">Refine the go-to-market <span class="it">entry point.</span></div>
+            <div class="body">For Epic-heavy health systems, multiple participants questioned whether the C-suite is the optimal initial buyer. The prevailing view was that <strong>physician groups, IPAs, operational leaders,</strong> and other stakeholders closer to the problem may provide a more effective path to adoption and internal advocacy.</div>
+          </div>
+        </li>
+        <li>
+          <div class="num">03</div>
+          <div>
+            <div class="ttl">Make the dashboard the <span class="it">centerpiece.</span></div>
+            <div class="body">There was broad agreement that the <strong>dashboard should become the visual anchor</strong> of the presentation. The ability to clearly demonstrate forecasting, reimbursement visibility, cancellation risk, operational efficiency, and financial impact would significantly strengthen the story.</div>
+          </div>
+        </li>
+      </ol>
+      <div class="conclusion-head">Roundtable Conclusion</div>
+      <p>The room was largely aligned that Sandy has the <strong>story, the technology, and the proof points.</strong> The primary opportunity is refining how those strengths are communicated. <span class="em">Tightening the financial narrative, leading through the right organizational entry point, and making the dashboard a tangible part of the product story</span> were the most commonly cited recommendations.</p>
     </div>
 
     <div class="grid">
