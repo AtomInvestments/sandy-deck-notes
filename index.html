@@ -256,6 +256,42 @@
   .pill.part { color: var(--warm); background: var(--warm-soft); border-color: rgba(212, 163, 86, 0.4); }
   .pill.open { color: var(--hot); background: var(--hot-soft); border-color: var(--hot-line); }
 
+  /* Timestamp chip — click to jump audio */
+  .ts {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: clamp(8.5px, 0.18vw + 7.5px, 10px);
+    letter-spacing: 0.08em;
+    color: var(--ink-3);
+    border: 1px dashed var(--rule-mid);
+    padding: 1px 5px;
+    cursor: pointer;
+    transition: all 220ms var(--ease);
+    margin-left: 6px;
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    vertical-align: 1px;
+    line-height: 1.2;
+    font-weight: 600;
+    user-select: none;
+  }
+  .ts::before { content: "▸"; font-size: 0.85em; opacity: 0.8; }
+  .ts:hover {
+    color: var(--glow);
+    border-color: var(--glow-line);
+    background: var(--glow-soft);
+    border-style: solid;
+  }
+  .ts.active {
+    color: var(--glow);
+    border-color: var(--glow);
+    border-style: solid;
+    background: var(--glow-soft);
+    box-shadow: 0 0 8px rgba(125, 211, 192, 0.3);
+  }
+  .ts.active::before { content: "♪"; }
+
   /* PUSHBACK rows */
   .f {
     display: grid; grid-template-columns: clamp(24px, 1.8vw, 30px) 1fr;
@@ -551,11 +587,11 @@
           <h2>Five real <span class="it">questions.</span></h2>
         </div>
         <div class="col-body">
-          <div class="q"><span class="n">i.</span><span class="t"><strong>David —</strong> How does Sandy get into large Epic shops?</span><span class="pill ok">Answered</span></div>
-          <div class="q"><span class="n">ii.</span><span class="t"><strong>David —</strong> Where's the CFO vocabulary?</span><span class="pill open">Open</span></div>
-          <div class="q"><span class="n">iii.</span><span class="t"><strong>Bruce / Chris —</strong> Why isn't the data productized?</span><span class="pill part">Half</span></div>
-          <div class="q"><span class="n">iv.</span><span class="t"><strong>John —</strong> How is PHI protected pre-LLM?</span><span class="pill ok">Answered</span></div>
-          <div class="q"><span class="n">v.</span><span class="t"><strong>Chris —</strong> Patient-facing RAG for aftercare?</span><span class="pill ok">Answered</span></div>
+          <div class="q"><span class="n">i.</span><span class="t"><strong>David —</strong> How does Sandy get into large Epic shops? <span class="ts" data-t="28:00">28:00</span></span><span class="pill ok">Answered</span></div>
+          <div class="q"><span class="n">ii.</span><span class="t"><strong>David —</strong> Where's the CFO vocabulary? <span class="ts" data-t="32:00">32:00</span></span><span class="pill open">Open</span></div>
+          <div class="q"><span class="n">iii.</span><span class="t"><strong>Bruce / Chris —</strong> Why isn't the data productized? <span class="ts" data-t="47:00">47:00</span></span><span class="pill part">Half</span></div>
+          <div class="q"><span class="n">iv.</span><span class="t"><strong>John —</strong> How is PHI protected pre-LLM? <span class="ts" data-t="12:00">12:00</span></span><span class="pill ok">Answered</span></div>
+          <div class="q"><span class="n">v.</span><span class="t"><strong>Chris —</strong> Patient-facing RAG for aftercare? <span class="ts" data-t="14:30">14:30</span></span><span class="pill ok">Answered</span></div>
         </div>
       </section>
 
@@ -564,11 +600,11 @@
           <h2>Five pieces of <span class="it">pushback.</span></h2>
         </div>
         <div class="col-body">
-          <div class="f"><span class="n">i.</span><div><span class="who">David</span><span class="body">Missing the finance vocabulary CFOs respond to — <em>DSO, NCR, GCR, reimbursement.</em> Pair ROI with <strong>RVUs</strong> for clinicians.</span></div></div>
-          <div class="f"><span class="n">ii.</span><div><span class="who">David</span><span class="body">For large Epic shops, enter via the <em>physicians' org</em> (IPA). <strong>First Physicians Group + Sarasota Memorial</strong> is the proof pattern.</span></div></div>
-          <div class="f"><span class="n">iii.</span><div><span class="who">Bruce / Chris</span><span class="body">Sandy has data nobody else has — forecast 7-15-day revenue, flag cancellations to the CFO. <em>"Be the integrator."</em></span></div></div>
-          <div class="f"><span class="n">iv.</span><div><span class="who">Ryan</span><span class="body">Hospitals are nonprofits — <strong>cash flow beats topline.</strong> Build analytics around DSO + cash-flow predictability.</span></div></div>
-          <div class="f feature"><span class="n">v.</span><div><span class="who">David</span><span class="body">Use <em>"distress interaction reduction"</em> framing for the CMO / case-management audiences.</span></div></div>
+          <div class="f"><span class="n">i.</span><div><span class="who">David <span class="ts" data-t="32:30">32:30</span></span><span class="body">Missing the finance vocabulary CFOs respond to — <em>DSO, NCR, GCR, reimbursement.</em> Pair ROI with <strong>RVUs</strong> for clinicians.</span></div></div>
+          <div class="f"><span class="n">ii.</span><div><span class="who">David <span class="ts" data-t="36:00">36:00</span></span><span class="body">For large Epic shops, enter via the <em>physicians' org</em> (IPA). <strong>First Physicians Group + Sarasota Memorial</strong> is the proof pattern.</span></div></div>
+          <div class="f"><span class="n">iii.</span><div><span class="who">Bruce / Chris <span class="ts" data-t="49:00">49:00</span></span><span class="body">Sandy has data nobody else has — forecast 7-15-day revenue, flag cancellations to the CFO. <em>"Be the integrator."</em></span></div></div>
+          <div class="f"><span class="n">iv.</span><div><span class="who">Ryan <span class="ts" data-t="55:00">55:00</span></span><span class="body">Hospitals are nonprofits — <strong>cash flow beats topline.</strong> Build analytics around DSO + cash-flow predictability.</span></div></div>
+          <div class="f feature"><span class="n">v.</span><div><span class="who">David <span class="ts" data-t="38:30">38:30</span></span><span class="body">Use <em>"distress interaction reduction"</em> framing for the CMO / case-management audiences.</span></div></div>
         </div>
       </section>
 
@@ -639,6 +675,32 @@
       el.style.setProperty('--my', `${e.clientY - r.top}px`);
     });
   });
+
+  // Timestamp chips — click to jump audio
+  (function () {
+    const audio = document.getElementById('audio');
+    if (!audio) return;
+    document.querySelectorAll('.ts[data-t]').forEach(el => {
+      el.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const parts = el.dataset.t.split(':').map(Number);
+        const secs = parts.length === 3 ? parts[0]*3600+parts[1]*60+parts[2] : parts[0]*60+parts[1];
+        audio.currentTime = secs;
+        const p = audio.play();
+        if (p && p.catch) p.catch(()=>{});
+        document.querySelectorAll('.ts.active').forEach(t => t.classList.remove('active'));
+        el.classList.add('active');
+      });
+    });
+    audio.addEventListener('timeupdate', () => {
+      const cur = audio.currentTime;
+      document.querySelectorAll('.ts[data-t]').forEach(el => {
+        const parts = el.dataset.t.split(':').map(Number);
+        const t = parts.length === 3 ? parts[0]*3600+parts[1]*60+parts[2] : parts[0]*60+parts[1];
+        el.classList.toggle('active', cur >= t && cur < t + 60);
+      });
+    });
+  })();
 
   // Player wiring
   (function () {
